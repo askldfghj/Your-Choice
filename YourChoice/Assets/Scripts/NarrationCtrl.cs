@@ -7,12 +7,20 @@ public class NarrationCtrl : MonoBehaviour
     public UITextTypeWriter _typeWriter;
 
     public TweenAlpha _labelAlpha;
-    TweenAlpha _tweenalpha;
+    public TweenAlpha _tweenalpha;
+
+    string _text;
+
+    void Awake()
+    {
+        _text = "";
+        _tweenalpha.eventReceiver = gameObject;
+    }
 
     // Use this for initialization
     void Start()
     {
-        _tweenalpha = GetComponent<TweenAlpha>();
+        
     }
 
     // Update is called once per frame
@@ -23,7 +31,17 @@ public class NarrationCtrl : MonoBehaviour
 
     void TextTyping()
     {
-        _typeWriter.TypeStart("당신의 첫 모험이다. 사실 이 말에는 큰 어폐가 있다.");
+        _typeWriter.TypeStart(_text);
+    }
+
+    public void NarrationOn(string text)
+    {
+        _tweenalpha.callWhenFinished = "TextTyping";
+        _text = text;
+        _tweenalpha.from = 0f;
+        _tweenalpha.to = 0.47f;
+        _tweenalpha.Reset();
+        _tweenalpha.Play(true);
     }
 
     void Disappear()

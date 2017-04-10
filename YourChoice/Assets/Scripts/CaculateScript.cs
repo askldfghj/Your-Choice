@@ -6,7 +6,7 @@ public class CaculateScript
     public static CaculateResult MonsterAttack(ObjectInfo enemy)
     {
         //성공확률
-        int frequency = 100 - ((PlayerObj._current._playerInfo._dex - enemy._dex) * 5);
+        int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex) * 5));
         if (frequency < 0) frequency = 0;
         //성공시
         int dam = (PlayerObj._current._playerInfo._str + PlayerObj._current._playerInfo._wep) - enemy._arm;
@@ -20,7 +20,7 @@ public class CaculateScript
     public static CaculateResult MonsterEscape(ObjectInfo enemy)
     {
         //성공확률
-        int frequency = 100 - (((PlayerObj._current._playerInfo._dex - enemy._dex * 2) * 10));
+        int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex * 2) * 10));
         if (frequency < 0) frequency = 0;
         //성공시
         int dam = 0;
@@ -33,7 +33,7 @@ public class CaculateScript
     public static CaculateResult MonsterSurprise(ObjectInfo enemy)
     {
         //성공확률
-        int frequency = 100 - ((PlayerObj._current._playerInfo._dex - enemy._dex) * 10) * 2;
+        int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex) * 10) * 2);
         if (frequency < 0) frequency = 0;
         //성공시
         int dam = ((PlayerObj._current._playerInfo._str + PlayerObj._current._playerInfo._wep) - enemy._arm) * 2;

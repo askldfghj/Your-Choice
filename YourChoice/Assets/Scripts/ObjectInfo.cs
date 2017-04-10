@@ -3,6 +3,12 @@ using System.Collections;
 
 public class ObjectInfo
 {
+    public string _name
+    {
+        get;
+        set;
+    }
+
     public int _health
     {
         get;
@@ -34,8 +40,9 @@ public class ObjectInfo
         set;
     }
 
-    public ObjectInfo(int health, int str, int dex, int intel, int wep, int arm)
+    public ObjectInfo(string name, int health, int str, int dex, int intel, int wep, int arm)
     {
+        _name = name;
         _health = health;
         _str = str;
         _dex = dex;

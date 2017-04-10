@@ -14,7 +14,7 @@ public class BGScroll : MonoBehaviour
 
     void Start()
     {
-        StartScroll();
+
     }
 
     // Update is called once per frame

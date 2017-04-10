@@ -9,6 +9,6 @@ public class PlayerObj : MonoBehaviour
     void Awake()
     {
         _current = this;
-        _playerInfo = new ObjectInfo(30, 5, 5, 5, 1, 2);
+        _playerInfo = new ObjectInfo("player", 30, 5, 5, 5, 1, 2);
     }
 }

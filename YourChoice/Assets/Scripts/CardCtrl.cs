@@ -38,21 +38,23 @@ public class CardCtrl : MonoBehaviour
         //샘플 몬스터
         
         _descSet.Clear();
-        ObjectInfo goblin = new ObjectInfo(7, 3, 1, 0, 2, 0);
+
+
+        //ObjectInfo goblin = new ObjectInfo(7, 3, 1, 0, 2, 0);
         //종류에 따른 OnHover 이벤트에 넣을 description 작성 및 배열 or 리스트로 저장
         //샘플, 어택의 경우
-        CaculateResult result = CaculateScript.MonsterAttack(goblin);
+        CaculateResult result = CaculateScript.MonsterAttack(DataPool._current._objectDic[0]);
         string desc = "성공확률 : " + result._frequency + " %" + "\n" +
                                      "성공시 : " + result._success + " 데미지의 공격"  + "\n" + 
                                      "실패시 : 패널티 없음";
         _descSet.Add(desc);
 
-        result = CaculateScript.MonsterEscape(goblin);
+        result = CaculateScript.MonsterEscape(DataPool._current._objectDic[0]);
         desc = "성공확률 : " + result._frequency + " %" + "\n" +
                                      "성공시 : " + "도망" + "\n" +
                                      "실패시 : 패널티 없음";
         _descSet.Add(desc);
-        result = CaculateScript.MonsterSurprise(goblin);
+        result = CaculateScript.MonsterSurprise(DataPool._current._objectDic[0]);
         desc = "성공확률 : " + result._frequency + " %" + "\n" +
                                      "성공시 : " + result._success + " 데미지의 공격" + "\n" +
                                      "실패시 : 다음 피격 2배";

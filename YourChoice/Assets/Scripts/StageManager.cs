@@ -5,7 +5,8 @@ public class StageManager : MonoBehaviour
 {
     public UIManager _StageUI;
     public GameObject _card;
-    public BGScroll _backGround; 
+    public BGScroll _backGround;
+    public NarrationCtrl _narration;
 
     WaitForSeconds _encounterSec;
     float _encounterRate;
@@ -23,14 +24,28 @@ public class StageManager : MonoBehaviour
 
     void Start()
     {
+        XmlReader._current.FileRead();
         _StageUI.SetPlayerHP();
-        
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    void FileLoadingEnd()
+    {
+        _backGround.StartScroll();
+        StartNarration();
+    }
+
+    void StartNarration()
+    {
+        //나레이션 생성 ex) text = textGenerate(int 인덱스, 정보 등등...);
+        string text = "당신의 첫 모험이다. 사실 이 말에는 큰 어폐가 있다.";
+        _narration.gameObject.SetActive(true);
+        _narration.NarrationOn(text);
     }
 
     public void StartStage()
