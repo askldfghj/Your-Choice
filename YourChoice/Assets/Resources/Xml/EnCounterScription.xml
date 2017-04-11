@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EncounterScription xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AttackEncounter>
+    <EncounterMessage>
+      <ID>0</ID>
+      <Text>몬스터를 발견했다. 어떻게 할까.</Text>
+    </EncounterMessage>
+    <EncounterMessage>
+      <ID>1</ID>
+      <Text>몬스터가 길을 막고 있다. 어떻게 할까.</Text>
+    </EncounterMessage>
+    <PlayerAttack>
+      <ID>0</ID>
+      <Text>당신은 쥐고 있는 무기로부터 짜릿한 감촉을 느꼈다.</Text>
+    </PlayerAttack>
+    <PlayerAttack>
+      <ID>1</ID>
+      <Text>마을 훈련장을 어깨너머로 본 경험이 빛을 발했다!</Text>
+    </PlayerAttack>
+    <MonsterAttack>
+      <ID>0</ID>
+      <Text>하! 당신의 그 허술한 손놀림이 적에게 기회를 주었다.</Text>
+    </MonsterAttack>
+    <MonsterAttack>
+      <ID>1</ID>
+      <Text>누구나 처음엔 그럴 듯한 계획을 가지고 있다.</Text>
+    </MonsterAttack>
+    <Miss>
+      <ID>0</ID>
+      <Text>무사하기만 한다면 돌이킬 수 있다.</Text>
+    </Miss>
+    <Miss>
+      <ID>1</ID>
+      <Text>다행이게도, 둔한 것은 그대 만이 아니었다.</Text>
+    </Miss>
+  </AttackEncounter>
+</EncounterScription>

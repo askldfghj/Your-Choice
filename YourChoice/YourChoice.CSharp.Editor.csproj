@@ -152,7 +152,9 @@
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
-    <None Include="Assets\Resources\Xml\monsterInfo.txt" />
+    <None Include="Assets\Resources\Xml\DungeonScription.xml" />
+    <None Include="Assets\Resources\Xml\EnCounterScription.xml" />
+    <None Include="Assets\Resources\Xml\monsterInfo.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

@@ -11,4 +11,9 @@ public class PlayerObj : MonoBehaviour
         _current = this;
         _playerInfo = new ObjectInfo("player", 30, 5, 5, 5, 1, 2);
     }
+
+    public void Damaged(int dam)
+    {
+        _playerInfo._health -= dam;
+    }
 }

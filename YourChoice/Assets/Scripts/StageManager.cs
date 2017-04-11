@@ -13,9 +13,13 @@ public class StageManager : MonoBehaviour
     float _encRateInit;
     CardCtrl _cardScript;
 
+    enum StageState { Walk = 0, Encounter, End };
+    StageState _state;
+
     // Use this for initialization
     void Awake()
     {
+        _state = StageState.Walk;
         Screen.SetResolution(Screen.width, (Screen.width / 16) * 9, true);
         _encounterSec = new WaitForSeconds(3f);
         _encRateInit = 20f;
@@ -37,20 +41,29 @@ public class StageManager : MonoBehaviour
     void FileLoadingEnd()
     {
         _backGround.StartScroll();
-        StartNarration();
+        //나레이션 생성 ex) text = textGenerate(int 인덱스, 정보 등등...);
+        //StartNarration(DataPool._current._DungeonStartDic[Random.Range(0, DataPool._current._DungeonStartDic.Count)]);
+        StartNarration(DataPool._current._ScriptionDic["DungeonStart"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["DungeonStart"].Count)]);
     }
 
-    void StartNarration()
+    public void StartNarration(string text)
     {
-        //나레이션 생성 ex) text = textGenerate(int 인덱스, 정보 등등...);
-        string text = "당신의 첫 모험이다. 사실 이 말에는 큰 어폐가 있다.";
         _narration.gameObject.SetActive(true);
         _narration.NarrationOn(text);
     }
 
+    public void SetPlayerHPOnUI()
+    {
+        _StageUI.SetPlayerHP();
+    }
+
     public void StartStage()
     {
-        StartCoroutine("EventEncounter");
+        if (_state == StageState.Walk)
+        {
+            StartCoroutine("EventEncounter");
+        }
     }
 
     IEnumerator EventEncounter()
@@ -69,6 +82,7 @@ public class StageManager : MonoBehaviour
             }
             yield return _encounterSec;
         }
+        _state = StageState.Encounter;
         _backGround.StopScroll();
         _card.SetActive(true);
         _cardScript.CardGenerate();

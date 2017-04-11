@@ -12,11 +12,34 @@ public class UITextTypeWriter : MonoBehaviour
         // TODO: add optional delay when to start
     }
 
+    public void HardOff()
+    {
+        StopCoroutine("TextReadWait");
+    }
+
+    public void FullType(string str)
+    {
+        StopCoroutine("PlayText");
+        _txt.text = str;
+        StartCoroutine("TextReadWait");
+    }
+
+    IEnumerator TextReadWait()
+    {
+        yield return new WaitForSeconds(3f);
+        _eventReceiver.SendMessage("Disappear");
+    }
+
     public void TypeStart(string str)
     {
         _str = str;
-        _txt.text = "";
         StartCoroutine("PlayText", 0.05f);
+    }
+
+    public void CoroutinesAllStop()
+    {
+        StopCoroutine("PlayText");
+        StopCoroutine("TextReadWait");
     }
     IEnumerator PlayText(float delay)
     {
@@ -26,7 +49,9 @@ public class UITextTypeWriter : MonoBehaviour
             _txt.text = _str.Substring(0, i);
             yield return sec;
         }
-        yield return new WaitForSeconds(3f);
-        _eventReceiver.SendMessage("Disappear");
+        _eventReceiver.SendMessage("ToTurnOffButton");
+        StartCoroutine("TextReadWait");
     }
+
+   
 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CaculateScript
 {
-    public static CaculateResult MonsterAttack(ObjectInfo enemy)
+    public static CaculateResult PlayerAttack(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex) * 5));
@@ -17,7 +17,7 @@ public class CaculateScript
         return new CaculateResult(frequency, dam, faildam);
     }
 
-    public static CaculateResult MonsterEscape(ObjectInfo enemy)
+    public static CaculateResult PlayerEscape(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex * 2) * 10));
@@ -30,7 +30,7 @@ public class CaculateScript
         return new CaculateResult(frequency, dam, faildam);
     }
 
-    public static CaculateResult MonsterSurprise(ObjectInfo enemy)
+    public static CaculateResult PlayerSurprise(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex) * 10) * 2);
