@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
-public class ObjectInfo
+public class ObjectInfo : ICloneable
 {
     public string _name
     {
@@ -40,6 +41,17 @@ public class ObjectInfo
         set;
     }
 
+    public ObjectInfo()
+    {
+        _name = "";
+        _health = 0;
+        _str = 0;
+        _dex = 0;
+        _int = 0;
+        _wep = 0;
+        _arm = 0;
+    }
+
     public ObjectInfo(string name, int health, int str, int dex, int intel, int wep, int arm)
     {
         _name = name;
@@ -49,5 +61,11 @@ public class ObjectInfo
         _int = intel;
         _wep = wep;
         _arm = arm;
+    }
+
+    public object Clone()
+    {
+        ObjectInfo obj = new ObjectInfo(_name, _health, _str, _dex, _int, _wep, _arm);
+        return obj;
     }
 }

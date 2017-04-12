@@ -91,7 +91,6 @@ public class NarrationCtrl : MonoBehaviour
 
     void NarrationTurnOff()
     {
-        _gm.StartStage();
         gameObject.SetActive(false);
     }
 }

@@ -6,6 +6,8 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
     public GameObject _card;
     public PlayerObj _player;
     public StageManager _gm;
+
+    ObjectInfo _enemy;
     string[] _commands;
 
     void Awake()
@@ -20,9 +22,29 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             //성공
             string text = "그대는 " + DataPool._current._objectDic[0]._name + "에게 " +
                           result._success + "의 데미지를 입혔다.";
+            _enemy._health -= result._success;
+            
+
+            string narration = DataPool._current._ScriptionDic["PlayerAttack"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["PlayerAttack"].Count)];
+            if (_enemy._health < 0)
+            {
+                //적 처치
+
+                text += "\n" + "적이 쓰러졌다.";
+                //처치보상 함수 필요
+
+                _card.SendMessage("CardEnd");
+                
+
+                _gm.SetEnd();
+            }
+            else
+            {
+                //적 생존
+            }
             _card.SendMessage("ResultDesc", text);
-            _gm.StartNarration(DataPool._current._ScriptionDic["PlayerAttack"]
-                                            [Random.Range(0, DataPool._current._ScriptionDic["PlayerAttack"].Count)]);
+            _gm.StartNarration(narration);
         }
         else
         {
@@ -69,8 +91,14 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         else
         {
             //실패
-
         }
+    }
+
+    public void EventCaculate()
+    {
+        //적 생성
+        _enemy = (ObjectInfo) DataPool._current._objectDic[0].Clone();
+        _card.SendMessage("CardSetting", CaculateScript.MonsterEncounter(_enemy));
     }
 
     public void GetCommands(ref string[] _gmCommands)

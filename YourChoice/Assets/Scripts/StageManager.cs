@@ -8,6 +8,9 @@ public class StageManager : MonoBehaviour
     public BGScroll _backGround;
     public NarrationCtrl _narration;
 
+    public UILabel _resultDesc;
+    public TweenAlpha _resultAlpha;
+
     WaitForSeconds _encounterSec;
     float _encounterRate;
     float _encRateInit;
@@ -21,7 +24,7 @@ public class StageManager : MonoBehaviour
     {
         _state = StageState.Walk;
         Screen.SetResolution(Screen.width, (Screen.width / 16) * 9, true);
-        _encounterSec = new WaitForSeconds(3f);
+        _encounterSec = new WaitForSeconds(1f);
         _encRateInit = 20f;
         _cardScript = _card.GetComponent<CardCtrl>();
     }
@@ -30,6 +33,7 @@ public class StageManager : MonoBehaviour
     {
         XmlReader._current.FileRead();
         _StageUI.SetPlayerHP();
+        
     }
 
     // Update is called once per frame
@@ -45,6 +49,43 @@ public class StageManager : MonoBehaviour
         //StartNarration(DataPool._current._DungeonStartDic[Random.Range(0, DataPool._current._DungeonStartDic.Count)]);
         StartNarration(DataPool._current._ScriptionDic["DungeonStart"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["DungeonStart"].Count)]);
+        StartStage();
+    }
+
+    public void ShowResult(string str)
+    {
+        _resultDesc.text = str;
+        StartCoroutine("ShowResultEffect");
+    }
+
+    IEnumerator ShowResultEffect()
+    {
+        ResultOn();
+        yield return new WaitForSeconds(7f);
+        ResultOff();
+    }
+
+    void ResultOn()
+    {
+        _resultAlpha.callWhenFinished = "";
+        _resultAlpha.from = 0;
+        _resultAlpha.to = 1;
+        _resultAlpha.Reset();
+        _resultAlpha.Play(true);
+    }
+
+    void ResultOff()
+    {
+        _resultAlpha.callWhenFinished = "ResultTurnOff";
+        _resultAlpha.from = 1;
+        _resultAlpha.to = 0;
+        _resultAlpha.Reset();
+        _resultAlpha.Play(true);
+    }
+
+    void ResultTurnOff()
+    {
+        _resultDesc.text = "";
     }
 
     public void StartNarration(string text)
@@ -64,6 +105,27 @@ public class StageManager : MonoBehaviour
         {
             StartCoroutine("EventEncounter");
         }
+    }
+
+    public void BGScrollStart()
+    {
+        
+    }
+
+    public void SetWalk()
+    {
+        _state = StageState.Walk;
+        _backGround.StartScroll();
+    }
+
+    public void SetEncounter()
+    {
+        _state = StageState.Encounter;
+    }
+
+    public void SetEnd()
+    {
+        _state = StageState.End;
     }
 
     IEnumerator EventEncounter()

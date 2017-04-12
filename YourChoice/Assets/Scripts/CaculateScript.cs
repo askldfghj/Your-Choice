@@ -3,7 +3,30 @@ using System.Collections;
 
 public class CaculateScript
 {
-    public static CaculateResult PlayerAttack(ObjectInfo enemy)
+    public static ResultAndDesc MonsterEncounter(ObjectInfo enemy)
+    {
+        ResultAndDesc rd = new ResultAndDesc();
+
+        rd.result[0] = PlayerAttack(enemy);
+        rd.result[1] = PlayerEscape(enemy);
+
+        //기습은 첫 전투시만 가능
+        rd.result[2] = PlayerSurprise(enemy);
+
+
+        rd.desc[0] = "성공확률 : " + rd.result[0]._frequency + " %" + "\n" +
+                                     "성공시 : " + rd.result[0]._success + " 데미지의 공격" + "\n" +
+                                     "실패시 : 패널티 없음";
+        rd.desc[1] = "성공확률 : " + rd.result[1]._frequency + " %" + "\n" +
+                                     "성공시 : " + "도망" + "\n" +
+                                     "실패시 : 패널티 없음";
+        rd.desc[2] = "성공확률 : " + rd.result[2]._frequency + " %" + "\n" +
+                                     "성공시 : " + rd.result[2]._success + " 데미지의 공격" + "\n" +
+                                     "실패시 : 다음 피격 2배";
+        return rd;
+    }
+
+    static CaculateResult PlayerAttack(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex) * 5));
@@ -17,7 +40,7 @@ public class CaculateScript
         return new CaculateResult(frequency, dam, faildam);
     }
 
-    public static CaculateResult PlayerEscape(ObjectInfo enemy)
+    static CaculateResult PlayerEscape(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex * 2) * 10));
@@ -30,7 +53,7 @@ public class CaculateScript
         return new CaculateResult(frequency, dam, faildam);
     }
 
-    public static CaculateResult PlayerSurprise(ObjectInfo enemy)
+    static CaculateResult PlayerSurprise(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex) * 10) * 2);

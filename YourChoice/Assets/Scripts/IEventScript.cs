@@ -3,5 +3,6 @@ using System.Collections;
 
 interface IEventScript
 {
+    void EventCaculate();
     void GetCommands(ref string[] _gmCommands);
 }
