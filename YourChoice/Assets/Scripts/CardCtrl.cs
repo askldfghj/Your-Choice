@@ -17,10 +17,13 @@ public class CardCtrl : MonoBehaviour
 
     string[] _buttonCommands;
     string[] _buttonTexts;
+    string[] _resultDescs;
+
     void Awake()
     {
         _buttonCommands = new string[3];
         _buttonTexts = new string[3];
+        _resultDescs = new string[3];
         _resultsAndDescs = new ResultAndDesc();
     }
 
@@ -52,11 +55,6 @@ public class CardCtrl : MonoBehaviour
         _card._flipButton.SetActive(false);
     }
 
-    void ResultDesc(string text)
-    {
-        _card._frontDesc.text = text;
-    }
-
     void ReFlip()
     {
         ButtonTurnOff();
@@ -71,13 +69,15 @@ public class CardCtrl : MonoBehaviour
         }
     }
 
+    void SetFrontDesc(string text)
+    {
+        _card._frontDesc.text = text;
+    }
     public void CardGenerate()
     {
         //카드 종류 얻기
         //ex
-        _currentEvent = DataPool._current._eventList[1].gameObject;
-        _card._frontDesc.text = DataPool._current._ScriptionDic["EncounterMessage"]
-                                    [Random.Range(0, DataPool._current._ScriptionDic["EncounterMessage"].Count)];
+        _currentEvent = DataPool._current._eventList[2].gameObject;
 
         //종류에 따른 계산 함수 호출
         _currentEvent.SendMessage("EventCaculate");
@@ -87,13 +87,13 @@ public class CardCtrl : MonoBehaviour
         
     }
 
-    public void CardSetting(ResultAndDesc rd)
+    public void CardSetting(string[] descs)
     {
 
         //종류에 따른 OnHover 이벤트에 넣을 description 작성 및 배열 or 리스트로 저장
         //샘플, 어택의 경우
 
-        _resultsAndDescs = rd;
+        _resultDescs = descs;
     }
 
     void ButtonsInActive()
@@ -163,33 +163,33 @@ public class CardCtrl : MonoBehaviour
 
     public void SetDescription1()
     {
-        _card._backEffectDesc.text = _resultsAndDescs.desc[0];
+        _card._backEffectDesc.text = _resultDescs[0];
     }
 
     public void SetDescription2()
     {
-        _card._backEffectDesc.text = _resultsAndDescs.desc[1];
+        _card._backEffectDesc.text = _resultDescs[1];
     }
 
     public void SetDescription3()
     {
-        _card._backEffectDesc.text = _resultsAndDescs.desc[2];
+        _card._backEffectDesc.text = _resultDescs[2];
     }
 
     void ClickButton1()
     {
         //해당카드 종류 스크립트에 던짐
-        _currentEvent.SendMessage(_buttonCommands[0], _resultsAndDescs.result[0]);
+        _currentEvent.SendMessage(_buttonCommands[0]);
     }
 
     void ClickButton2()
     {
-        _currentEvent.SendMessage(_buttonCommands[1], _resultsAndDescs.result[1]);
+        _currentEvent.SendMessage(_buttonCommands[1]);
     }
 
     void ClickButton3()
     {
-        _currentEvent.SendMessage(_buttonCommands[2], _resultsAndDescs.result[2]);
+        _currentEvent.SendMessage(_buttonCommands[2]);
     }
 
     public void Button3InAcitve()

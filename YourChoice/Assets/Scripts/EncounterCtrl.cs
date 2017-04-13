@@ -8,6 +8,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
     public StageManager _gm;
 
     ObjectInfo _enemy;
+    ResultAndDesc _resultAndDesc;
     string[] _commands;
     string[] _commandsText;
 
@@ -19,14 +20,14 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         _commandsText = new string[] { "A. 공격" , "B. 도망" , "C. 기습"};
     }
 
-    void Attack(CaculateResult result)
+    void Attack()
     {
-        if (Random.Range(0.1f, 100f) <= result._frequency)
+        if (Random.Range(0.1f, 100f) <= _resultAndDesc.result[0]._frequency)
         {
             //성공
             string text = "그대는 " + DataPool._current._objectDic[0]._name + "에게 " +
-                          result._success + "의 데미지를 입혔다.";
-            _enemy._health -= result._success;
+                          _resultAndDesc.result[0]._success + "의 데미지를 입혔다.";
+            _enemy._health -= _resultAndDesc.result[0]._success;
             
 
             string narration;
@@ -52,7 +53,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
 
                 //적 생존
             }
-            _card.SendMessage("ResultDesc", text);
+            _card.SendMessage("SetFrontDesc", text);
             _gm.StartNarration(narration);
         }
         else
@@ -61,7 +62,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             if (Random.Range(0.1f, 100f) <= 70)
             {
                 //적의 공격 성공
-                _card.SendMessage("ResultDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
+                _card.SendMessage("SetFrontDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
                 _gm.StartNarration(DataPool._current._ScriptionDic["MonsterAttack"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["MonsterAttack"].Count)]);
                 _player.Damaged(3);
@@ -70,7 +71,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             else
             {
                 //적의 공격 실패
-                _card.SendMessage("ResultDesc", "서로 회피하였다.");
+                _card.SendMessage("SetFrontDesc", "서로 회피하였다.");
                 _gm.StartNarration(DataPool._current._ScriptionDic["Miss"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["Miss"].Count)]);
 
@@ -79,12 +80,12 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         _card.SendMessage("ReFlip");
         _eventCount++;
     }
-    void Run(CaculateResult result)
+    void Run()
     {
-        if (Random.Range(0.1f, 100f) <= result._frequency)
+        if (Random.Range(0.1f, 100f) <= _resultAndDesc.result[1]._frequency)
         {
             //성공
-            _card.SendMessage("ResultDesc", "도망에 성공했다.");
+            _card.SendMessage("SetFrontDesc", "도망에 성공했다.");
             _gm.StartNarration(DataPool._current._ScriptionDic["RunSuccess"]
                                         [Random.Range(0, DataPool._current._ScriptionDic["RunSuccess"].Count)]);
             _card.SendMessage("CardEnd");
@@ -93,7 +94,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         else
         {
             //실패
-            _card.SendMessage("ResultDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
+            _card.SendMessage("SetFrontDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
             _gm.StartNarration(DataPool._current._ScriptionDic["RunFail"]
                                         [Random.Range(0, DataPool._current._ScriptionDic["RunFail"].Count)]);
             _player.Damaged(3);
@@ -102,14 +103,14 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         _card.SendMessage("ReFlip");
         _eventCount++;
     }
-    void Surprise(CaculateResult result)
+    void Surprise()
     {
-        if (Random.Range(0.1f, 100f) <= result._frequency)
+        if (Random.Range(0.1f, 100f) <= _resultAndDesc.result[2]._frequency)
         {
             //성공
             string text = "그대는 " + DataPool._current._objectDic[0]._name + "에게 " +
-                          result._success + "의 데미지를 입혔다.";
-            _enemy._health -= result._success ;
+                          _resultAndDesc.result[2]._success + "의 데미지를 입혔다.";
+            _enemy._health -= _resultAndDesc.result[2]._success ;
 
             string narration;
             
@@ -135,7 +136,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
                 //적 생존
             }
             _eventCount++;
-            _card.SendMessage("ResultDesc", text);
+            _card.SendMessage("SetFrontDesc", text);
             _gm.StartNarration(narration);
 
         }
@@ -145,7 +146,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             if (Random.Range(0.1f, 100f) <= 70)
             {
                 //적의 공격 성공
-                _card.SendMessage("ResultDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 6의 데미지를 입혔다.");
+                _card.SendMessage("SetFrontDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 6의 데미지를 입혔다.");
                 _gm.StartNarration(DataPool._current._ScriptionDic["MonsterSurprise"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["MonsterSurprise"].Count)]);
                 _player.Damaged(3*2);
@@ -154,7 +155,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             else
             {
                 //적의 공격 실패
-                _card.SendMessage("ResultDesc", "서로 회피하였다.");
+                _card.SendMessage("SetFrontDesc", "서로 회피하였다.");
                 _gm.StartNarration(DataPool._current._ScriptionDic["Miss"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["Miss"].Count)]);
 
@@ -169,7 +170,11 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         _enemy = (ObjectInfo) DataPool._current._objectDic[0].Clone();
 
         _eventCount = 0;
-        _card.SendMessage("CardSetting", CaculateScript.MonsterEncounter(_enemy));
+
+        _resultAndDesc = CaculateScript.MonsterEncounter(_enemy);
+        _card.SendMessage("CardSetting", _resultAndDesc.desc);
+        _card.SendMessage("SetFrontDesc", DataPool._current._ScriptionDic["EncounterMessage"]
+                                    [Random.Range(0, DataPool._current._ScriptionDic["EncounterMessage"].Count)]);
     }
 
     public void GetCommands(ref string[] _gmCommands)

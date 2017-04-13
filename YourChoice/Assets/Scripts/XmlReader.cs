@@ -25,6 +25,7 @@ public class XmlReader : MonoBehaviour {
 
     IEnumerator ReadCoroutine()
     {
+        //몬스터 정보
         textAsset = (TextAsset)Resources.Load("Xml/" + "monsterInfo");
         xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
@@ -42,9 +43,9 @@ public class XmlReader : MonoBehaviour {
             yield return null;
         }
 
+        //던전 환경
         textAsset = (TextAsset)Resources.Load("Xml/" + "DungeonScription");
 
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("Scription/DungeonNarration/DungeonStart");
         for (int i = 0; i < nodes.Count; i++)
@@ -53,9 +54,9 @@ public class XmlReader : MonoBehaviour {
             yield return null;
         }
 
+        //몬스터 조우 관련
         textAsset = (TextAsset)Resources.Load("Xml/" + "EnCounterScription");
 
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/EncounterMessage");
         for (int i = 0; i < nodes.Count; i++)
@@ -63,8 +64,6 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["EncounterMessage"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
-
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/PlayerAttack");
         for (int i = 0; i < nodes.Count; i++)
@@ -72,8 +71,6 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["PlayerAttack"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
-
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/MonsterAttack");
         for (int i = 0; i < nodes.Count; i++)
@@ -81,8 +78,6 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["MonsterAttack"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
-
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/Miss");
         for (int i = 0; i < nodes.Count; i++)
@@ -90,8 +85,6 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["Miss"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
-
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/RunSuccess");
         for (int i = 0; i < nodes.Count; i++)
@@ -99,8 +92,6 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["RunSuccess"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
-
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/RunFail");
         for (int i = 0; i < nodes.Count; i++)
@@ -108,8 +99,6 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["RunFail"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
-
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/PlayerSurprise");
         for (int i = 0; i < nodes.Count; i++)
@@ -117,8 +106,6 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["PlayerSurprise"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
-
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/MonsterSurprise");
         for (int i = 0; i < nodes.Count; i++)
@@ -126,8 +113,6 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["MonsterSurprise"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
-
-        xmldoc = new XmlDocument();
         xmldoc.LoadXml(textAsset.text);
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/MonsterDown");
         for (int i = 0; i < nodes.Count; i++)
@@ -135,6 +120,61 @@ public class XmlReader : MonoBehaviour {
             DataPool._current._ScriptionDic["MonsterDown"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
+
+        //보물상자 관련
+        textAsset = (TextAsset)Resources.Load("Xml/" + "TresureScription");
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("TreasureScription/FindBox");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["FindBox"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("TreasureScription/FindTresure");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["FindTresure"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("TreasureScription/NotTresure");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["NotTresure"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("TreasureScription/Mimic");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["Mimic"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("TreasureScription/BoxSkip");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["BoxSkip"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+        textAsset = (TextAsset)Resources.Load("Xml/" + "TresureScription");
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("TreasureScription/Broken");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["Broken"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+        textAsset = (TextAsset)Resources.Load("Xml/" + "TresureScription");
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("TreasureScription/BrokenMimic");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["BrokenMimic"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+
 
         _gm.SendMessage("FileLoadingEnd");
     }
