@@ -19,7 +19,7 @@ public class CaculateScript
                                      "실패시 : 패널티 없음";
         rd.desc[1] = "성공확률 : " + rd.result[1]._frequency + " %" + "\n" +
                                      "성공시 : " + "도망" + "\n" +
-                                     "실패시 : 패널티 없음";
+                                     "실패시 : 피격률 100%";
         rd.desc[2] = "성공확률 : " + rd.result[2]._frequency + " %" + "\n" +
                                      "성공시 : " + rd.result[2]._success + " 데미지의 공격" + "\n" +
                                      "실패시 : 다음 피격 2배";

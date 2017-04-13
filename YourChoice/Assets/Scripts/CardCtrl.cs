@@ -16,9 +16,11 @@ public class CardCtrl : MonoBehaviour
     bool _cardEnd;
 
     string[] _buttonCommands;
+    string[] _buttonTexts;
     void Awake()
     {
         _buttonCommands = new string[3];
+        _buttonTexts = new string[3];
         _resultsAndDescs = new ResultAndDesc();
     }
 
@@ -27,6 +29,7 @@ public class CardCtrl : MonoBehaviour
         _cardEnd = false;
         transform.rotation = Quaternion.identity;
         _card._flipButton.SetActive(true);
+        ButtonsActive();
         CardOn();
     }
 
@@ -60,6 +63,14 @@ public class CardCtrl : MonoBehaviour
         StartCoroutine("FlipCard2");
     }
 
+    void SetButtonText()
+    {
+        for (int i = 0; i < _buttonTexts.Length; i++)
+        {
+            _card._buttons[i]._buttonLabel.text = _buttonTexts[i];
+        }
+    }
+
     public void CardGenerate()
     {
         //카드 종류 얻기
@@ -71,6 +82,9 @@ public class CardCtrl : MonoBehaviour
         //종류에 따른 계산 함수 호출
         _currentEvent.SendMessage("EventCaculate");
         _currentEvent.SendMessage("GetCommands", _buttonCommands);
+        _currentEvent.SendMessage("GetCommandsText", _buttonTexts);
+        SetButtonText();
+        
     }
 
     public void CardSetting(ResultAndDesc rd)
@@ -86,7 +100,7 @@ public class CardCtrl : MonoBehaviour
     {
         for (int i = 0; i < _card._buttons.Length; i++)
         {
-            _card._buttons[i].SetActive(false);
+            _card._buttons[i]._button.SetActive(false);
         }
     }
 
@@ -94,7 +108,7 @@ public class CardCtrl : MonoBehaviour
     {
         for (int i = 0; i < _card._buttons.Length; i++)
         {
-            _card._buttons[i].SetActive(true);
+            _card._buttons[i]._button.SetActive(true);
         }
     }
 
@@ -170,27 +184,32 @@ public class CardCtrl : MonoBehaviour
 
     void ClickButton2()
     {
-        
+        _currentEvent.SendMessage(_buttonCommands[1], _resultsAndDescs.result[1]);
     }
 
     void ClickButton3()
     {
-        
+        _currentEvent.SendMessage(_buttonCommands[2], _resultsAndDescs.result[2]);
+    }
+
+    public void Button3InAcitve()
+    {
+        _card._buttons[2]._button.SetActive(false);
     }
 
     void ButtonTurnOn()
     {
-        for (int i = 0; i < _card._buttonUI.Length; i++)
+        for (int i = 0; i < _card._buttons.Length; i++)
         {
-            _card._buttonUI[i].enabled = true;
+            _card._buttons[i]._buttonUI.enabled = true;
         }
     }
 
     void ButtonTurnOff()
     {
-        for (int i = 0; i < _card._buttonUI.Length; i++)
+        for (int i = 0; i < _card._buttons.Length; i++)
         {
-            _card._buttonUI[i].enabled = false;
+            _card._buttons[i]._buttonUI.enabled = false;
         }
     }
 
@@ -233,6 +252,7 @@ public class CardCtrl : MonoBehaviour
             yield return null;
         }
         transform.rotation = Quaternion.identity;
+        _currentEvent.SendMessage("CommandArrange");
         if (!_cardEnd) _card._flipButton.SetActive(true);
     }
 }
@@ -243,11 +263,19 @@ public class CardInfo
     public GameObject _cardFront;
     public GameObject _cardBack;
     public GameObject _flipButton;
-    public GameObject[] _buttons;
-    public UIButtonMessage[] _buttonUI;
+    public ButtonInfo[] _buttons;
     public UILabel _frontDesc;
     public UILabel _backEffectDesc;
 }
+
+[System.Serializable]
+public class ButtonInfo
+{
+    public GameObject _button;
+    public UIButtonMessage _buttonUI;
+    public UILabel _buttonLabel;
+}
+    
 
 public class DescriptionInfo
 {

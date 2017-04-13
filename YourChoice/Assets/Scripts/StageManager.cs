@@ -55,6 +55,7 @@ public class StageManager : MonoBehaviour
     public void ShowResult(string str)
     {
         _resultDesc.text = str;
+        StopCoroutine("ShowResultEffect");
         StartCoroutine("ShowResultEffect");
     }
 

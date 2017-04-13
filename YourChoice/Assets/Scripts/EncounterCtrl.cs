@@ -9,15 +9,19 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
 
     ObjectInfo _enemy;
     string[] _commands;
+    string[] _commandsText;
+
+    int _eventCount;
 
     void Awake()
     {
         _commands = new string[] { "Attack", "Run", "Surprise" };
+        _commandsText = new string[] { "A. 공격" , "B. 도망" , "C. 기습"};
     }
 
     void Attack(CaculateResult result)
     {
-        if (Random.Range(0f, 100f) < result._frequency)
+        if (Random.Range(0.1f, 100f) <= result._frequency)
         {
             //성공
             string text = "그대는 " + DataPool._current._objectDic[0]._name + "에게 " +
@@ -25,14 +29,16 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             _enemy._health -= result._success;
             
 
-            string narration = DataPool._current._ScriptionDic["PlayerAttack"]
-                                            [Random.Range(0, DataPool._current._ScriptionDic["PlayerAttack"].Count)];
+            string narration;
             if (_enemy._health < 0)
             {
                 //적 처치
 
                 text += "\n" + "적이 쓰러졌다.";
                 //처치보상 함수 필요
+
+                narration = DataPool._current._ScriptionDic["MonsterDown"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["MonsterDown"].Count)];
 
                 _card.SendMessage("CardEnd");
                 
@@ -41,6 +47,9 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             }
             else
             {
+                narration = DataPool._current._ScriptionDic["PlayerAttack"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["PlayerAttack"].Count)];
+
                 //적 생존
             }
             _card.SendMessage("ResultDesc", text);
@@ -49,7 +58,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         else
         {
             //실패
-            if (Random.Range(0f, 100f) < 70)
+            if (Random.Range(0.1f, 100f) <= 70)
             {
                 //적의 공격 성공
                 _card.SendMessage("ResultDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
@@ -64,40 +73,102 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
                 _card.SendMessage("ResultDesc", "서로 회피하였다.");
                 _gm.StartNarration(DataPool._current._ScriptionDic["Miss"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["Miss"].Count)]);
+
             }
         }
         _card.SendMessage("ReFlip");
+        _eventCount++;
     }
     void Run(CaculateResult result)
     {
-        if (Random.Range(0f, 100f) <= result._frequency)
+        if (Random.Range(0.1f, 100f) <= result._frequency)
         {
             //성공
-
+            _card.SendMessage("ResultDesc", "도망에 성공했다.");
+            _gm.StartNarration(DataPool._current._ScriptionDic["RunSuccess"]
+                                        [Random.Range(0, DataPool._current._ScriptionDic["RunSuccess"].Count)]);
+            _card.SendMessage("CardEnd");
+            _gm.SetEnd();
         }
         else
         {
             //실패
-
+            _card.SendMessage("ResultDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
+            _gm.StartNarration(DataPool._current._ScriptionDic["RunFail"]
+                                        [Random.Range(0, DataPool._current._ScriptionDic["RunFail"].Count)]);
+            _player.Damaged(3);
+            _gm.SetPlayerHPOnUI();
         }
+        _card.SendMessage("ReFlip");
+        _eventCount++;
     }
     void Surprise(CaculateResult result)
     {
-        if (Random.Range(0f, 100f) <= result._frequency)
+        if (Random.Range(0.1f, 100f) <= result._frequency)
         {
             //성공
+            string text = "그대는 " + DataPool._current._objectDic[0]._name + "에게 " +
+                          result._success + "의 데미지를 입혔다.";
+            _enemy._health -= result._success ;
+
+            string narration;
+            
+            if (_enemy._health < 0)
+            {
+                //적 처치
+
+                text += "\n" + "적이 쓰러졌다.";
+                //처치보상 함수 필요
+
+                narration = DataPool._current._ScriptionDic["MonsterDown"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["MonsterDown"].Count)];
+
+                _card.SendMessage("CardEnd");
+
+
+                _gm.SetEnd();
+            }
+            else
+            {
+                narration = DataPool._current._ScriptionDic["PlayerSurprise"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["PlayerSurprise"].Count)];
+                //적 생존
+            }
+            _eventCount++;
+            _card.SendMessage("ResultDesc", text);
+            _gm.StartNarration(narration);
 
         }
         else
         {
             //실패
+            if (Random.Range(0.1f, 100f) <= 70)
+            {
+                //적의 공격 성공
+                _card.SendMessage("ResultDesc", DataPool._current._objectDic[0]._name + "(는/이) 그대에게 6의 데미지를 입혔다.");
+                _gm.StartNarration(DataPool._current._ScriptionDic["MonsterSurprise"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["MonsterSurprise"].Count)]);
+                _player.Damaged(3*2);
+                _gm.SetPlayerHPOnUI();
+            }
+            else
+            {
+                //적의 공격 실패
+                _card.SendMessage("ResultDesc", "서로 회피하였다.");
+                _gm.StartNarration(DataPool._current._ScriptionDic["Miss"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["Miss"].Count)]);
+
+            }
         }
+        _card.SendMessage("ReFlip");
     }
 
     public void EventCaculate()
     {
         //적 생성
         _enemy = (ObjectInfo) DataPool._current._objectDic[0].Clone();
+
+        _eventCount = 0;
         _card.SendMessage("CardSetting", CaculateScript.MonsterEncounter(_enemy));
     }
 
@@ -106,6 +177,22 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         for (int i = 0; i < _commands.Length; i++)
         {
             _gmCommands[i] = _commands[i];
+        }
+    }
+
+    public void GetCommandsText(ref string[] _gmCommandsText)
+    {
+        for (int i = 0; i < _commandsText.Length; i++)
+        {
+            _gmCommandsText[i] = _commandsText[i];
+        }
+    }
+
+    public void CommandArrange()
+    {
+        if (_eventCount > 0)
+        {
+            _card.SendMessage("Button3InAcitve");
         }
     }
 }

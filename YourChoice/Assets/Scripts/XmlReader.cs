@@ -49,8 +49,6 @@ public class XmlReader : MonoBehaviour {
         nodes = xmldoc.SelectNodes("Scription/DungeonNarration/DungeonStart");
         for (int i = 0; i < nodes.Count; i++)
         {
-            //DataPool._current._DungeonStartDic.Add(int.Parse(nodes[i].SelectSingleNode("ID").InnerText),
-            //                                        (nodes[i].SelectSingleNode("Text").InnerText));
             DataPool._current._ScriptionDic["DungeonStart"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
@@ -62,8 +60,6 @@ public class XmlReader : MonoBehaviour {
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/EncounterMessage");
         for (int i = 0; i < nodes.Count; i++)
         {
-            //DataPool._current._DungeonStartDic.Add(int.Parse(nodes[i].SelectSingleNode("ID").InnerText),
-            //                                        (nodes[i].SelectSingleNode("Text").InnerText));
             DataPool._current._ScriptionDic["EncounterMessage"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
@@ -73,8 +69,6 @@ public class XmlReader : MonoBehaviour {
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/PlayerAttack");
         for (int i = 0; i < nodes.Count; i++)
         {
-            //DataPool._current._DungeonStartDic.Add(int.Parse(nodes[i].SelectSingleNode("ID").InnerText),
-            //                                        (nodes[i].SelectSingleNode("Text").InnerText));
             DataPool._current._ScriptionDic["PlayerAttack"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
@@ -84,8 +78,6 @@ public class XmlReader : MonoBehaviour {
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/MonsterAttack");
         for (int i = 0; i < nodes.Count; i++)
         {
-            //DataPool._current._DungeonStartDic.Add(int.Parse(nodes[i].SelectSingleNode("ID").InnerText),
-            //                                        (nodes[i].SelectSingleNode("Text").InnerText));
             DataPool._current._ScriptionDic["MonsterAttack"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
@@ -95,9 +87,52 @@ public class XmlReader : MonoBehaviour {
         nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/Miss");
         for (int i = 0; i < nodes.Count; i++)
         {
-            //DataPool._current._DungeonStartDic.Add(int.Parse(nodes[i].SelectSingleNode("ID").InnerText),
-            //                                        (nodes[i].SelectSingleNode("Text").InnerText));
             DataPool._current._ScriptionDic["Miss"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+
+        xmldoc = new XmlDocument();
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/RunSuccess");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["RunSuccess"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+
+        xmldoc = new XmlDocument();
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/RunFail");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["RunFail"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+
+        xmldoc = new XmlDocument();
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/PlayerSurprise");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["PlayerSurprise"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+
+        xmldoc = new XmlDocument();
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/MonsterSurprise");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["MonsterSurprise"].Add(nodes[i].SelectSingleNode("Text").InnerText);
+            yield return null;
+        }
+
+        xmldoc = new XmlDocument();
+        xmldoc.LoadXml(textAsset.text);
+        nodes = xmldoc.SelectNodes("EncounterScription/AttackEncounter/MonsterDown");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._ScriptionDic["MonsterDown"].Add(nodes[i].SelectSingleNode("Text").InnerText);
             yield return null;
         }
 
