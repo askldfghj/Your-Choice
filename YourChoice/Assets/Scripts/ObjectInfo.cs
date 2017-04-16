@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 
-public class ObjectInfo : ICloneable
+public class ObjectInfo : EventObject
 {
     public string _name
     {
@@ -63,7 +62,7 @@ public class ObjectInfo : ICloneable
         _arm = arm;
     }
 
-    public object Clone()
+    public override EventObject Clone()
     {
         ObjectInfo obj = new ObjectInfo(_name, _health, _str, _dex, _int, _wep, _arm);
         return obj;

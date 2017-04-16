@@ -112,6 +112,15 @@ public class CardCtrl : MonoBehaviour
         }
     }
 
+    public void ChangeEvent(GameObject gameobj)
+    {
+        _currentEvent = gameobj;
+        _currentEvent.SendMessage("EventCaculate");
+        _currentEvent.SendMessage("GetCommands", _buttonCommands);
+        _currentEvent.SendMessage("GetCommandsText", _buttonTexts);
+        SetButtonText();
+    }
+
     public void CardEnd()
     {
         _cardEnd = true;
@@ -274,37 +283,5 @@ public class ButtonInfo
     public GameObject _button;
     public UIButtonMessage _buttonUI;
     public UILabel _buttonLabel;
-}
-    
-
-public class DescriptionInfo
-{
-    public string _frequency;
-    public string _success;
-    public string _fail;
-    public DescriptionInfo(string fre, string suc, string fail)
-    {
-        _frequency = fre;
-        _success = suc;
-        _fail = fail;
-    }
-}
-
-public class ResultAndDesc
-{
-    public CaculateResult[] result;
-    public string[] desc;
-
-    public ResultAndDesc()
-    {
-        result = new CaculateResult[3];
-        desc = new string[3];
-    }
-
-    public void SetObj(CaculateResult[] r, string[] d)
-    {
-        result = r;
-        desc = d;
-    }
 }
 

@@ -154,12 +154,15 @@
     <Compile Include="Assets\Scripts\CardCtrl.cs" />
     <Compile Include="Assets\Scripts\DataPool.cs" />
     <Compile Include="Assets\Scripts\EncounterCtrl.cs" />
+    <Compile Include="Assets\Scripts\EventObject.cs" />
     <Compile Include="Assets\Scripts\IEventScript.cs" />
+    <Compile Include="Assets\Scripts\ItemObjInfo.cs" />
     <Compile Include="Assets\Scripts\NarrationCtrl.cs" />
     <Compile Include="Assets\Scripts\ObjectInfo.cs" />
     <Compile Include="Assets\Scripts\PlayerObj.cs" />
     <Compile Include="Assets\Scripts\StageManager.cs" />
     <Compile Include="Assets\Scripts\TreasureCtrl.cs" />
+    <Compile Include="Assets\Scripts\TreasureObjInfo.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\UITextTypeWriter.cs" />
     <Compile Include="Assets\Scripts\XmlReader.cs" />

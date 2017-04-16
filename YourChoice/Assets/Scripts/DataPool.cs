@@ -7,12 +7,16 @@ public class DataPool : MonoBehaviour {
     public static DataPool _current;
     public GameObject _eventSet;
     public Transform[] _eventList;
-    public Dictionary<int, ObjectInfo> _objectDic;
+    public Dictionary<string, List<EventObject>> _eventObjDic;
     //public Dictionary<int, string> _DungeonStartDic;
 
 
 
     public Dictionary<string, List<string>> _ScriptionDic;
+
+    //이벤트 오브젝트 리스트
+    List<EventObject> _MonsterList; //몬스터
+
 
     //던전환경 관련 스크립트
     List<string> _DungeonStartScript;
@@ -42,10 +46,15 @@ public class DataPool : MonoBehaviour {
     void Awake()
     {
         _current = this;
-        _objectDic = new Dictionary<int, ObjectInfo>();
+        _eventObjDic = new Dictionary<string, List<EventObject>>();
         //_DungeonStartDic = new Dictionary<int, string>();
 
         _ScriptionDic = new Dictionary<string, List<string>>();
+
+        //몬스터 리스트
+        _MonsterList = new List<EventObject>();
+        _eventObjDic.Add("Monster", _MonsterList);
+
 
         //던전환경 관련 스크립트
         _DungeonStartScript = new List<string>();

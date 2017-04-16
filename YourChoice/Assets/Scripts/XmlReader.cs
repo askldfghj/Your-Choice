@@ -25,6 +25,7 @@ public class XmlReader : MonoBehaviour {
 
     IEnumerator ReadCoroutine()
     {
+        //이벤트 오브젝트 읽기 ******************************************************************
         //몬스터 정보
         textAsset = (TextAsset)Resources.Load("Xml/" + "monsterInfo");
         xmldoc = new XmlDocument();
@@ -32,8 +33,7 @@ public class XmlReader : MonoBehaviour {
         nodes = xmldoc.SelectNodes("MonsterSet/Monster");
         for (int i = 0; i < nodes.Count; i++)
         {
-            DataPool._current._objectDic.Add(int.Parse(nodes[i].SelectSingleNode("ID").InnerText),
-                        new ObjectInfo(nodes[i].SelectSingleNode("Name").InnerText,
+            DataPool._current._eventObjDic["Monster"].Add(new ObjectInfo(nodes[i].SelectSingleNode("Name").InnerText,
                                     int.Parse(nodes[i].SelectSingleNode("HP").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("STR").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("DEX").InnerText),
@@ -43,6 +43,8 @@ public class XmlReader : MonoBehaviour {
             yield return null;
         }
 
+
+        //스크립트 읽기 *************************************************************************
         //던전 환경
         textAsset = (TextAsset)Resources.Load("Xml/" + "DungeonScription");
 

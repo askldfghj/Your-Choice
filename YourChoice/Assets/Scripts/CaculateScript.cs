@@ -6,27 +6,26 @@ public class CaculateScript
     public static ResultAndDesc MonsterEncounter(ObjectInfo enemy)
     {
         ResultAndDesc rd = new ResultAndDesc();
+        MonsterResult[] result = new MonsterResult[3];
+        result[0] = PlayerAttack(enemy);
+        result[1] = PlayerEscape(enemy);
+        result[2] = PlayerSurprise(enemy);
 
-        rd.result[0] = PlayerAttack(enemy);
-        rd.result[1] = PlayerEscape(enemy);
-
-        //기습은 첫 전투시만 가능
-        rd.result[2] = PlayerSurprise(enemy);
-
-
-        rd.desc[0] = "성공확률 : " + rd.result[0]._frequency + " %" + "\n" +
-                                     "성공시 : " + rd.result[0]._success + " 데미지의 공격" + "\n" +
+        rd.desc[0] = "성공확률 : " + result[0]._frequency + " %" + "\n" +
+                                     "성공시 : " + result[0]._success + " 데미지의 공격" + "\n" +
                                      "실패시 : 패널티 없음";
-        rd.desc[1] = "성공확률 : " + rd.result[1]._frequency + " %" + "\n" +
+        rd.desc[1] = "성공확률 : " + result[1]._frequency + " %" + "\n" +
                                      "성공시 : " + "도망" + "\n" +
                                      "실패시 : 피격률 100%";
-        rd.desc[2] = "성공확률 : " + rd.result[2]._frequency + " %" + "\n" +
-                                     "성공시 : " + rd.result[2]._success + " 데미지의 공격" + "\n" +
+        rd.desc[2] = "성공확률 : " + result[2]._frequency + " %" + "\n" +
+                                     "성공시 : " +result[2]._success + " 데미지의 공격" + "\n" +
                                      "실패시 : 다음 피격 2배";
+        rd.SetResult(result);
+
         return rd;
     }
 
-    static CaculateResult PlayerAttack(ObjectInfo enemy)
+    static MonsterResult PlayerAttack(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex) * 5));
@@ -37,10 +36,10 @@ public class CaculateScript
         //실패시
         int faildam = ((enemy._str + enemy._wep) - PlayerObj._current._playerInfo._arm);
         if (faildam < 0) faildam = 0;
-        return new CaculateResult(frequency, dam, faildam);
+        return new MonsterResult(frequency, dam, faildam);
     }
 
-    static CaculateResult PlayerEscape(ObjectInfo enemy)
+    static MonsterResult PlayerEscape(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex * 2) * 10));
@@ -50,10 +49,10 @@ public class CaculateScript
         //실패시
         int faildam = ((enemy._str + enemy._wep) - PlayerObj._current._playerInfo._arm) * 2;
         if (faildam < 0) faildam = 0;
-        return new CaculateResult(frequency, dam, faildam);
+        return new MonsterResult(frequency, dam, faildam);
     }
 
-    static CaculateResult PlayerSurprise(ObjectInfo enemy)
+    static MonsterResult PlayerSurprise(ObjectInfo enemy)
     {
         //성공확률
         int frequency = 100 - Mathf.Abs(((PlayerObj._current._playerInfo._dex - enemy._dex) * 10) * 2);
@@ -64,20 +63,90 @@ public class CaculateScript
         //실패시
         int faildam = ((enemy._str + enemy._wep) - PlayerObj._current._playerInfo._arm) * 2;
         if (faildam < 0) faildam = 0;
-        return new CaculateResult(frequency, dam, faildam);
+        return new MonsterResult(frequency, dam, faildam);
+    }
+
+    public static ResultAndDesc TreasureEncounter(bool mimic)
+    {
+        ResultAndDesc rd = new ResultAndDesc();
+        TreasureResult[] result = new TreasureResult[3];
+        result[0] = TreasureOpen(mimic);
+        result[1] = TreasureSkip();
+        result[2] = TreasureBroken(mimic);
+        rd.desc[0] = "1번";
+        rd.desc[1] = "2번";
+        rd.desc[2] = "3번";
+        rd.SetResult(result);
+        return rd;
+    }
+
+    static TreasureResult TreasureOpen(bool mimic)
+    {
+        if (!mimic)
+        {
+            TreasureResult result = new TreasureResult();
+            result._treasure = new TreasureObjInfo();
+            result._treasure._items = new ItemObjInfo[1];
+            result._treasure._items[0] = new ItemObjInfo();
+            result._treasure._items[0]._name = "보물";
+            result._treasure.gold = 10;
+            return result;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    static TreasureResult TreasureSkip()
+    {
+        return null;
+    }
+    static TreasureResult TreasureBroken(bool mimic)
+    {
+        return null;
     }
 }
 
 public class CaculateResult
 {
+}
+
+public class MonsterResult : CaculateResult
+{
     public int _frequency;
     public int _success;
     public int _fail;
 
-    public CaculateResult(int fre, int suc, int fail)
+    public MonsterResult(int fre, int suc, int fail)
     {
         _frequency = fre;
         _success = suc;
         _fail = fail;
+    }
+}
+
+public class TreasureResult : CaculateResult
+{
+    public TreasureObjInfo _treasure;
+
+    public TreasureResult()
+    {
+        _treasure = null;
+    }
+}
+
+public class ResultAndDesc
+{
+    public CaculateResult[] result;
+    public string[] desc;
+
+    public ResultAndDesc()
+    {
+        desc = new string[3];
+    }
+
+    public void SetResult(CaculateResult[] r)
+    {
+        result = r;
     }
 }
