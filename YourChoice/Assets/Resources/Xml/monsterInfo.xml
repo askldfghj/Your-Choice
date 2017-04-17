@@ -10,4 +10,14 @@
     <WEP>2</WEP>
     <ARM>0</ARM>
   </Monster>
+  <Mimic>
+    <ID>0</ID>
+    <Name>혀내민 상자</Name>
+    <HP>15</HP>
+    <STR>2</STR>
+    <DEX>3</DEX>
+    <INT>1</INT>
+    <WEP>0</WEP>
+    <ARM>0</ARM>
+  </Mimic>
 </MonsterSet>

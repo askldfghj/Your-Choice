@@ -10,6 +10,7 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
 
     TreasureResult[] _result;
     ResultAndDesc _resultAndDesc;
+    CardCtrl _cardScript;
     string[] _commands;
     string[] _commandsText;
 
@@ -17,6 +18,7 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
 
     void Awake()
     {
+        _cardScript = _card.GetComponent<CardCtrl>();
         _result = new TreasureResult[3];
         _commands = new string[] { "Open", "Skip", "Broken" };
         _commandsText = new string[] { "A. 열기", "B. 지나가기", "C. 부수기" };
@@ -24,53 +26,69 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
 
     void Open()
     {
+        string text = "";
+        string narration = "";
         if (!mimic)
         {
-            string narration = "";
-            string text = _result[0]._treasure._items[0]._name + " 획득\n" + _result[0]._treasure.gold + " 골드 획득";
-            _card.SendMessage("SetFrontDesc", text);
+            text = _result[0]._treasure._items[0]._name + " 획득\n" + _result[0]._treasure.gold + " 골드 획득";
             _gm.StartNarration(narration);
             _gm.SetEnd();
-            _card.SendMessage("CardEnd");
-            _card.SendMessage("ReFlip");
+            _cardScript.CardEnd();
         }
         else
         {
-            string narration = "";
             _gm.StartNarration(narration);
-            string text = "응 미믹";
-            _card.SendMessage("ChangeEvent", DataPool._current._eventList[1].gameObject);
-            _card.SendMessage("SetFrontDesc", text);
-            _card.SendMessage("ReFlip");
+            text = "응 미믹";
+            ObjectInfo enemy = (ObjectInfo)DataPool._current._eventObjDic["Mimic"][0].Clone();
+            _cardScript.ChangeToMonster(enemy);
         }
+        _cardScript.SetFrontDesc(text);
+        _cardScript.ReFlip();
     }
 
     void Skip()
     {
-
+        string narration = "";
+        string text = "무시하고 지나쳤다.";
+        _gm.StartNarration(narration);
+        _gm.SetEnd();
+        _cardScript.SetFrontDesc(text);
+        _cardScript.CardEnd();
+        _cardScript.ReFlip();
     }
 
     void Broken()
     {
-
+        string text = "";
+        string narration = "";
+        if (!mimic)
+        {
+            text = "상자는 산산조각이 났다.";
+            _gm.StartNarration(narration);
+            _gm.SetEnd();
+            _cardScript.CardEnd();
+        }
+        else
+        {
+            _gm.StartNarration(narration);
+            text = "미믹이 맞았다!";
+            ObjectInfo enemy = (ObjectInfo)DataPool._current._eventObjDic["Mimic"][0].Clone();
+            _cardScript.ChangeToMonster(enemy);
+        }
+        _cardScript.SetFrontDesc(text);
+        _cardScript.ReFlip();
     }
 
 
     public void EventCaculate()
     {
         mimic = true;
-        _card.SendMessage("SetFrontDesc", DataPool._current._ScriptionDic["FindBox"]
+        _cardScript.SetFrontDesc(DataPool._current._ScriptionDic["FindBox"]
                                     [Random.Range(0, DataPool._current._ScriptionDic["FindBox"].Count)]);
-        //_card.SendMessage("CardSetting", CaculateScript.MonsterEncounter(_enemy));
         _resultAndDesc = CaculateScript.TreasureEncounter(mimic);
         _result = (TreasureResult[])_resultAndDesc.result;
-        //results[0] = new CaculateResult(50, 0, 0);
-        //results[1] = new CaculateResult(60, 0, 0);
-        //results[2] = new CaculateResult(70, 0, 0);
-        //ResultAndDesc rd = new ResultAndDesc();
-        //rd.SetObj(results, desc);
-        _card.SendMessage("CardSetting", _resultAndDesc.desc);
-        _card.SendMessage("SetFrontDesc", DataPool._current._ScriptionDic["FindBox"]
+        _cardScript.CardSetting(_resultAndDesc.desc);
+        _cardScript.SetFrontDesc(DataPool._current._ScriptionDic["FindBox"]
                                     [Random.Range(0, DataPool._current._ScriptionDic["FindBox"].Count)]);
     }
 

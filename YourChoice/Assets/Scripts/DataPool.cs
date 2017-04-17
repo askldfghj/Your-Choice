@@ -16,7 +16,7 @@ public class DataPool : MonoBehaviour {
 
     //이벤트 오브젝트 리스트
     List<EventObject> _MonsterList; //몬스터
-
+    List<EventObject> _MimicList;
 
     //던전환경 관련 스크립트
     List<string> _DungeonStartScript;
@@ -53,7 +53,9 @@ public class DataPool : MonoBehaviour {
 
         //몬스터 리스트
         _MonsterList = new List<EventObject>();
+        _MimicList = new List<EventObject>();
         _eventObjDic.Add("Monster", _MonsterList);
+        _eventObjDic.Add("Mimic", _MimicList);
 
 
         //던전환경 관련 스크립트

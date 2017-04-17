@@ -43,6 +43,19 @@ public class XmlReader : MonoBehaviour {
             yield return null;
         }
 
+        nodes = xmldoc.SelectNodes("MonsterSet/Mimic");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            DataPool._current._eventObjDic["Mimic"].Add(new ObjectInfo(nodes[i].SelectSingleNode("Name").InnerText,
+                                    int.Parse(nodes[i].SelectSingleNode("HP").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("STR").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("DEX").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("INT").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("WEP").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("ARM").InnerText)));
+            yield return null;
+        }
+
 
         //스크립트 읽기 *************************************************************************
         //던전 환경

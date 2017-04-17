@@ -55,7 +55,7 @@ public class CardCtrl : MonoBehaviour
         _card._flipButton.SetActive(false);
     }
 
-    void ReFlip()
+    public void ReFlip()
     {
         ButtonTurnOff();
         StartCoroutine("FlipCard2");
@@ -69,7 +69,7 @@ public class CardCtrl : MonoBehaviour
         }
     }
 
-    void SetFrontDesc(string text)
+    public void SetFrontDesc(string text)
     {
         _card._frontDesc.text = text;
     }
@@ -118,14 +118,23 @@ public class CardCtrl : MonoBehaviour
         _currentEvent.SendMessage("EventCaculate");
         _currentEvent.SendMessage("GetCommands", _buttonCommands);
         _currentEvent.SendMessage("GetCommandsText", _buttonTexts);
-        SetButtonText();
+    }
+
+    public void ChangeToMonster(ObjectInfo enemy)
+    {
+        _currentEvent = DataPool._current._eventList[1].gameObject;
+        EncounterCtrl encounter = _currentEvent.GetComponent<EncounterCtrl>();
+        encounter.EventCaculateAfter(enemy);
+        _currentEvent.SendMessage("GetCommands", _buttonCommands);
+        _currentEvent.SendMessage("GetCommandsText", _buttonTexts);
+
     }
 
     public void CardEnd()
     {
         _cardEnd = true;
         _card._flipButton.SetActive(false);
-        //결과 계산 함수 필요
+        //결과 계산 함수 필요, 인자로 string 받아보자
         _gm.ShowResult("획득 경험치 : 3\n획득 골드 : 10\n획득 아이템 : 없음");
         StartCoroutine("CardOffEffect");
     }
@@ -262,6 +271,7 @@ public class CardCtrl : MonoBehaviour
         }
         transform.rotation = Quaternion.identity;
         _currentEvent.SendMessage("CommandArrange");
+        SetButtonText();
         if (!_cardEnd) _card._flipButton.SetActive(true);
     }
 }
