@@ -80,6 +80,13 @@ public class CaculateScript
         return rd;
     }
 
+    public static TrapResult PlayerTraped()
+    {
+        TrapResult result = new TrapResult();
+        result.trapDam = Random.Range(3, 10);
+        return result;
+    }
+
     static TreasureResult TreasureOpen(bool mimic)
     {
         if (!mimic)
@@ -133,6 +140,11 @@ public class TreasureResult : CaculateResult
     {
         _treasure = null;
     }
+}
+
+public class TrapResult
+{
+    public int trapDam;
 }
 
 public class ResultAndDesc
