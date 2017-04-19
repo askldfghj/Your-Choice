@@ -152,6 +152,7 @@
     <Compile Include="Assets\Scripts\ControllScript\ButtonCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\CardCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\EncounterCtrl.cs" />
+    <Compile Include="Assets\Scripts\ControllScript\EventObjCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\IEventScript.cs" />
     <Compile Include="Assets\Scripts\ControllScript\NarrationCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\TrapCtrl.cs" />

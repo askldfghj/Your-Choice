@@ -1,22 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerObj : MonoBehaviour
+public class EventObjCtrl : MonoBehaviour
 {
-    public static PlayerObj _current;
-    public ObjectInfo _playerInfo;
     Vector3 _originPos;
+    public TweenAlpha _tweenAlpha;
 
     void Awake()
     {
         _originPos = transform.localPosition;
-        _current = this;
-        _playerInfo = new ObjectInfo("player", 30, 5, 5, 5, 1, 2);
     }
 
-    public void Damaged(int dam)
+    public void OnObject()
     {
-        _playerInfo._health -= dam;
+        _tweenAlpha.from = 0;
+        _tweenAlpha.to = 1;
+        _tweenAlpha.duration = 1;
+        //<<sprite 교체코드 삽입 필요, 스프라이트를 인자로 받던가..
+        _tweenAlpha.Reset();
+        _tweenAlpha.Play(true);
+    }
+
+    public void CloseObject()
+    {
+        _tweenAlpha.from = 1;
+        _tweenAlpha.to = 0;
+        _tweenAlpha.duration = 1.5f;
+        _tweenAlpha.Reset();
+        _tweenAlpha.Play(true);
     }
 
     public void ObjShake()

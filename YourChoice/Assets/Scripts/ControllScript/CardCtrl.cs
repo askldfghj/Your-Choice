@@ -12,6 +12,7 @@ public class CardCtrl : MonoBehaviour
     GameObject _currentEvent;
 
     ResultAndDesc _resultsAndDescs;
+    Vector3 _originPos;
 
     bool _cardEnd;
 
@@ -25,6 +26,7 @@ public class CardCtrl : MonoBehaviour
         _buttonTexts = new string[3];
         _resultDescs = new string[3];
         _resultsAndDescs = new ResultAndDesc();
+        _originPos = new Vector3(0, 39, 0);
     }
 
     void OnEnable()
@@ -77,14 +79,14 @@ public class CardCtrl : MonoBehaviour
     {
         //카드 종류 얻기
         //ex
-        _currentEvent = DataPool._current._eventList[3].gameObject;
+        _currentEvent = DataPool._current._eventList[1].gameObject;
 
         //종류에 따른 계산 함수 호출
         _currentEvent.SendMessage("EventCaculate");
         _currentEvent.SendMessage("GetCommands", _buttonCommands);
         _currentEvent.SendMessage("GetCommandsText", _buttonTexts);
         SetButtonText();
-        
+
     }
 
     public void CardSetting(string[] descs)
@@ -169,7 +171,7 @@ public class CardCtrl : MonoBehaviour
         _cardTween.Play(true);
         _cardTweenAlpha.Reset();
         _cardTweenAlpha.Play(true);
-        
+
     }
 
     void ResumeStage()
