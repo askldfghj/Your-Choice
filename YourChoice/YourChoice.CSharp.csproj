@@ -157,6 +157,8 @@
     <Compile Include="Assets\Scripts\ControllScript\NarrationCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\TrapCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\TreasureCtrl.cs" />
+    <Compile Include="Assets\Scripts\Inventory\CursorCtrl.cs" />
+    <Compile Include="Assets\Scripts\Inventory\ItemIconCtrl.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\EventObject.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\ItemObjInfo.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\ObjectInfo.cs" />
