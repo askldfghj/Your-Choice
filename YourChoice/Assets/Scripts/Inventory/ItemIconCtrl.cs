@@ -4,26 +4,43 @@ using System.Collections;
 public class ItemIconCtrl : MonoBehaviour
 {
     public UISprite _sprite;
-    string _spriteName = "Square";
+    CursorCtrl _cursor;
 
     bool _isDrag = false;
+
+    void Awake()
+    {
+        _cursor = GameObject.Find("Cursor").GetComponent<CursorCtrl>();
+    }
+
     void SetItem(string sprName)
     {
-        _sprite.spriteName = "Square";
+
+    }
+
+    void OnPress(bool isDown)
+    {
+        if (isDown && UICamera.currentTouchID > -2)
+        {
+            if (_sprite.enabled)
+            {
+                _isDrag = true;
+                _cursor.PressCursor(_sprite, transform.position, _sprite.spriteName);
+                _sprite.enabled = false;
+            }
+        }
+        else
+        {
+            if (_isDrag)
+            {
+                _cursor.Drop();
+            }
+            _isDrag = false;
+        }
     }
 
     void OnDrag(Vector2 delta)
     {
-        if (_isDrag)
-        {
-
-        }
-        else
-        {
-            _isDrag = true;
-            Debug.Log("call");
-            _sprite.enabled = true;
-            _sprite.spriteName = _spriteName;
-        }
+        _cursor.Drag();
     }
 }

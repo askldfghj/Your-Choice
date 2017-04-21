@@ -150,8 +150,8 @@ public class CardCtrl : MonoBehaviour
     void CardOn()
     {
         _cardTween.callWhenFinished = "";
-        _cardTween.from.y = -100;
-        _cardTween.to.y = 39;
+        _cardTween.from.y = 175;
+        _cardTween.to.y = 314;
         _cardTweenAlpha.from = 0;
         _cardTweenAlpha.to = 1;
         _cardTween.Reset();
@@ -163,8 +163,8 @@ public class CardCtrl : MonoBehaviour
     void CardOff()
     {
         _cardTween.callWhenFinished = "ResumeStage";
-        _cardTween.from.y = 39;
-        _cardTween.to.y = -100;
+        _cardTween.from.y = 314;
+        _cardTween.to.y = 175;
         _cardTweenAlpha.from = 1;
         _cardTweenAlpha.to = 0;
         _cardTween.Reset();

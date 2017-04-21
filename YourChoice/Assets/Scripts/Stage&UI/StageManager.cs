@@ -49,6 +49,7 @@ public class StageManager : MonoBehaviour
         //StartNarration(DataPool._current._DungeonStartDic[Random.Range(0, DataPool._current._DungeonStartDic.Count)]);
         StartNarration(DataPool._current._ScriptionDic["DungeonStart"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["DungeonStart"].Count)]);
+        Time.timeScale = 0f;
         StartStage();
     }
 
