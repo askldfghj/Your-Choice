@@ -7,7 +7,7 @@ public class StageManager : MonoBehaviour
     public GameObject _card;
     public BGScroll _backGround;
     public NarrationCtrl _narration;
-
+    public InventoryManager _invenManager;
     public UILabel _resultDesc;
     public TweenAlpha _resultAlpha;
 
@@ -49,6 +49,9 @@ public class StageManager : MonoBehaviour
         //StartNarration(DataPool._current._DungeonStartDic[Random.Range(0, DataPool._current._DungeonStartDic.Count)]);
         StartNarration(DataPool._current._ScriptionDic["DungeonStart"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["DungeonStart"].Count)]);
+
+        //인벤토리 초기화및 정리
+        _invenManager.ApplyEquipItems();
         Time.timeScale = 0f;
         StartStage();
     }

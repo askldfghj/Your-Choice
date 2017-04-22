@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemObjInfo : EventObject
+[System.Serializable]
+public class ItemObjInfo : ObjectInfo
 {
-    public string _name { get; set; }
+    public string _effect;
+    public string _spriteName;
+    public string _itemType;
 }

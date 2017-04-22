@@ -6,11 +6,13 @@ public class CursorCtrl : MonoBehaviour
     public UISprite _sprite;
     public Camera _uiCamera;
 
-    UISprite _target; 
+    UISprite _target;
+    ItemIconCtrl _targetInventory;
 
-    public void PressCursor(UISprite spr, Vector3 pos, string name)
+    public void PressCursor(ItemIconCtrl icon, Vector3 pos, string name)
     {
-        _target = spr;
+        _target = icon._sprite;
+        _targetInventory = icon;
         pos.z = 0f;
         transform.position = pos;
         _sprite.enabled = true;
@@ -29,25 +31,67 @@ public class CursorCtrl : MonoBehaviour
     public void Drop()
     {
         Collider col = UICamera.lastHit.collider;
-        if (col != null && col.tag == "ItemSlot")
+
+        if (col != null)
         {
-            UISprite spr = col.GetComponent<ItemIconCtrl>()._sprite;
-            if (spr.enabled)
+            if (col.tag == "ItemSlot" || col.tag == "EquipSlot")
             {
-                _target.enabled = true;
-                _target.spriteName = spr.spriteName;
+                ItemIconCtrl colItem = col.GetComponent<ItemIconCtrl>();
+                if (CheckSlotType(_targetInventory, colItem))
+                {
+                    ItemObjInfo temp = colItem._item;
+                    colItem._item = _targetInventory._item;
+                    _targetInventory._item = temp;
+
+                    if (_targetInventory._InventoryName != "")
+                    {
+                        PlayerObj._current.SelectApplyEquipItem(_targetInventory._InventoryName);
+                    }
+                    else if (colItem._InventoryName != "")
+                    {
+                        PlayerObj._current.SelectApplyEquipItem(colItem._InventoryName);
+                    }
+
+                    UISprite spr = col.GetComponent<ItemIconCtrl>()._sprite;
+                    if (spr.enabled)
+                    {
+                        _target.enabled = true;
+                        _target.spriteName = spr.spriteName;
+                    }
+                    else
+                    {
+                        _target.enabled = false;
+                        spr.enabled = true;
+                    }
+                    spr.spriteName = _sprite.spriteName;
+                }
+                else
+                {
+                    _target.enabled = true;
+                }
             }
             else
             {
-                _target.enabled = false;
-                spr.enabled = true;
+                _target.enabled = true;
             }
-            spr.spriteName = _sprite.spriteName;
+            _sprite.enabled = false;
         }
         else
         {
             _target.enabled = true;
+            _sprite.enabled = false;
         }
-        _sprite.enabled = false;
+    }
+
+    bool CheckSlotType(ItemIconCtrl a, ItemIconCtrl b)
+    {
+        if (b.tag == "EquipSlot")
+        {
+            if (a._item._itemType != b._slotType)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

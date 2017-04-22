@@ -4,14 +4,48 @@ using System.Collections;
 public class PlayerObj : MonoBehaviour
 {
     public static PlayerObj _current;
-    public ObjectInfo _playerInfo;
+    public PlayerInfo _playerInfo;
+    public InventoryManager _myInven;
     Vector3 _originPos;
 
     void Awake()
     {
         _originPos = transform.localPosition;
         _current = this;
-        _playerInfo = new ObjectInfo("player", 30, 5, 5, 5, 1, 2);
+
+        _playerInfo = new PlayerInfo("player", 30, 5, 5, 5, 0, 0);
+    }
+
+    public void ApplyWeapon()
+    {
+        _playerInfo._wep = _myInven._equipInventory[0]._item._wep;
+    }
+
+    public void ApplyArmor()
+    {
+        _playerInfo._arm = _myInven._equipInventory[1]._item._arm;
+    }
+
+    public void ApplyAccessory()
+    {
+
+    }
+
+    public void SelectApplyEquipItem(string str)
+    {
+        switch (str)
+        {
+            case "wep":
+                ApplyWeapon();
+                break;
+            case "arm":
+                ApplyArmor();
+                break;
+            case "acc":
+                break;
+            default:
+                break;
+        }
     }
 
     public void Damaged(int dam)

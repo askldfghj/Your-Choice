@@ -154,14 +154,17 @@
     <Compile Include="Assets\Scripts\ControllScript\EncounterCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\EventObjCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\IEventScript.cs" />
+    <Compile Include="Assets\Scripts\ControllScript\InventoryCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\NarrationCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\TrapCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\TreasureCtrl.cs" />
     <Compile Include="Assets\Scripts\Inventory\CursorCtrl.cs" />
+    <Compile Include="Assets\Scripts\Inventory\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Inventory\ItemIconCtrl.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\EventObject.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\ItemObjInfo.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\ObjectInfo.cs" />
+    <Compile Include="Assets\Scripts\ObjectScript\PlayerInfo.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\PlayerObj.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\TreasureObjInfo.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\BGScroll.cs" />

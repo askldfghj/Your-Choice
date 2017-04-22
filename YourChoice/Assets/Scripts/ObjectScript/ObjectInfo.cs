@@ -3,42 +3,13 @@ using System.Collections;
 
 public class ObjectInfo : EventObject
 {
-    public string _name
-    {
-        get;
-        set;
-    }
-
-    public int _health
-    {
-        get;
-        set;
-    }
-    public int _str
-    {
-        get;
-        set;
-    }
-    public int _dex
-    {
-        get;
-        set;
-    }
-    public int _int
-    {
-        get;
-        set;
-    }
-    public int _wep
-    {
-        get;
-        set;
-    }
-    public int _arm
-    {
-        get;
-        set;
-    }
+    public string _name;
+    public int _health;
+    public int _str;
+    public int _dex;
+    public int _int;
+    public int _wep;
+    public int _arm;
 
     public ObjectInfo()
     {
