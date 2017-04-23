@@ -18,12 +18,12 @@ public class PlayerObj : MonoBehaviour
 
     public void ApplyWeapon()
     {
-        _playerInfo._wep = _myInven._equipInventory[0]._item._wep;
+        _playerInfo._wep = _myInven._myEquipInventory[0]._item._wep;
     }
 
     public void ApplyArmor()
     {
-        _playerInfo._arm = _myInven._equipInventory[1]._item._arm;
+        _playerInfo._arm = _myInven._myEquipInventory[1]._item._arm;
     }
 
     public void ApplyAccessory()

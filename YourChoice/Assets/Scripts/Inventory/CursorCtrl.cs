@@ -5,9 +5,22 @@ public class CursorCtrl : MonoBehaviour
 {
     public UISprite _sprite;
     public Camera _uiCamera;
+    public GameObject _itemDesc;
 
     UISprite _target;
     ItemIconCtrl _targetInventory;
+    ItemDescCtrl _itemDescCtrl;
+
+    void Awake()
+    {
+        _itemDescCtrl = _itemDesc.GetComponent<ItemDescCtrl>();
+    }
+
+    void OnEnable()
+    {
+        _target = null;
+        _itemDesc.SetActive(false);
+    }
 
     public void PressCursor(ItemIconCtrl icon, Vector3 pos, string name)
     {
@@ -17,7 +30,7 @@ public class CursorCtrl : MonoBehaviour
         transform.position = pos;
         _sprite.enabled = true;
         _sprite.spriteName = name;
-
+        _itemDesc.SetActive(false);
     }
 
     public void Drag()
@@ -81,6 +94,23 @@ public class CursorCtrl : MonoBehaviour
             _target.enabled = true;
             _sprite.enabled = false;
         }
+        _target = null;
+        _targetInventory = null;
+    }
+
+    public void ShowItemDesc(string name, string point, string stat)
+    {
+        _itemDesc.SetActive(true);
+        Vector3 pos = Input.mousePosition;
+        pos.x = Mathf.Clamp01(pos.x / Screen.width);
+        pos.y = Mathf.Clamp01(pos.y / Screen.height);
+        _itemDesc.transform.position = _uiCamera.ViewportToWorldPoint(pos);
+        _itemDescCtrl.SetDesc(name, point, stat);
+    }
+
+    public void CloseItemDesc()
+    {
+        _itemDesc.SetActive(false);
     }
 
     bool CheckSlotType(ItemIconCtrl a, ItemIconCtrl b)
@@ -93,5 +123,20 @@ public class CursorCtrl : MonoBehaviour
             }
         }
         return true;
+    }
+
+    void ShutDown()
+    {
+        if (_target == null || _targetInventory == null) return;
+        else
+        {
+            _target.enabled = true;
+            _sprite.enabled = false;
+        }
+    }
+
+    void OnDisable()
+    {
+        ShutDown();
     }
 }

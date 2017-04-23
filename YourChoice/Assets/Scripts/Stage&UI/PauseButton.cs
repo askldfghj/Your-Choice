@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PauseButton : MonoBehaviour
 {
+    public GameObject _curtain;
     public UIButtonMessage _btn;
     public StageManager _gm;
 
@@ -16,6 +17,7 @@ public class PauseButton : MonoBehaviour
         _btn.functionName = "Set1";
         Time.timeScale = 0;
         _gm.PauseColliders();
+        _curtain.SetActive(true);
     }
 
     void Set1()
@@ -23,5 +25,6 @@ public class PauseButton : MonoBehaviour
         _btn.functionName = "Set0";
         Time.timeScale = 1;
         _gm.ResumeColliders();
+        _curtain.SetActive(false);
     }
 }

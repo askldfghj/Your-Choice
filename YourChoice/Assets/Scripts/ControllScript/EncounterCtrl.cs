@@ -114,6 +114,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             _gm.StartNarration(DataPool._current._ScriptionDic["RunFail"]
                                         [Random.Range(0, DataPool._current._ScriptionDic["RunFail"].Count)]);
             _player.Damaged(3);
+            _player.ObjShake();
             _gm.SetPlayerHPOnUI();
         }
         _cardScript.ReFlip();

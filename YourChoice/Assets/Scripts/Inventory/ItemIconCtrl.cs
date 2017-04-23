@@ -29,6 +29,34 @@ public class ItemIconCtrl : MonoBehaviour
         }
     }
 
+    void OnHover(bool isOver)
+    {
+        if (_item._spriteName != "")
+        {
+            string stat = "";
+            string point = "";
+            if (isOver)
+            {
+                switch (_item._itemType)
+                {
+                    case "wep":
+                        stat = "공격력";
+                        point = _item._wep.ToString();
+                        break;
+                    case "arm":
+                        stat = "방어력";
+                        point = _item._arm.ToString();
+                        break;
+                }
+                _cursor.ShowItemDesc(_item._name, point, stat);
+            }
+            else
+            {
+                _cursor.CloseItemDesc();
+            }
+        }
+    }
+
     void OnPress(bool isDown)
     {
         if (isDown && UICamera.currentTouchID > -2)

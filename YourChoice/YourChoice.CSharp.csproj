@@ -160,6 +160,7 @@
     <Compile Include="Assets\Scripts\ControllScript\TreasureCtrl.cs" />
     <Compile Include="Assets\Scripts\Inventory\CursorCtrl.cs" />
     <Compile Include="Assets\Scripts\Inventory\InventoryManager.cs" />
+    <Compile Include="Assets\Scripts\Inventory\ItemDescCtrl.cs" />
     <Compile Include="Assets\Scripts\Inventory\ItemIconCtrl.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\EventObject.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\ItemObjInfo.cs" />
@@ -173,6 +174,8 @@
     <Compile Include="Assets\Scripts\Stage&amp;UI\PauseButton.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\StageLineCtrl.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\StageManager.cs" />
+    <Compile Include="Assets\Scripts\Stage&amp;UI\StatusWindowCtrl.cs" />
+    <Compile Include="Assets\Scripts\Stage&amp;UI\UIButtonCtrl.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\UITextTypeWriter.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\XmlReader.cs" />

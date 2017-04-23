@@ -12,7 +12,9 @@ public class StageManager : MonoBehaviour
     public UILabel _resultDesc;
     public TweenAlpha _resultAlpha;
     public BoxCollider[] _colliders;
-    public bool[] _collsenabled;
+    public UIButtonCtrl _uibtn;
+
+    bool[] _collsenabled;
 
 
     WaitForSeconds _encounterSec;
@@ -61,6 +63,8 @@ public class StageManager : MonoBehaviour
 
     public void PauseColliders()
     {
+        _invenManager.InventoryColliderShutDown();
+        _uibtn.AllColliderShutDown();
         for (int i = 0; i < _colliders.Length; i++)
         {
             _collsenabled[i] = _colliders[i].enabled;
@@ -70,6 +74,8 @@ public class StageManager : MonoBehaviour
 
     public void ResumeColliders()
     {
+        _uibtn.AllBtnShutOn();
+        _invenManager.InventoryColliderShutOn();
         for (int i = 0; i < _colliders.Length; i++)
         {
             _colliders[i].enabled = _collsenabled[i];
@@ -82,7 +88,7 @@ public class StageManager : MonoBehaviour
         StopCoroutine("ShowResultEffect");
         StartCoroutine("ShowResultEffect");
     }
-
+    
     IEnumerator ShowResultEffect()
     {
         ResultOn();
@@ -142,6 +148,7 @@ public class StageManager : MonoBehaviour
         _state = StageState.Walk;
         _backGround.StartScroll();
         _stageLine.StartRun();
+        _uibtn.AllBtnShutOn();
     }
 
     public void SetEncounter()
@@ -160,7 +167,6 @@ public class StageManager : MonoBehaviour
         _encounterRate = _encRateInit;
         while (true)
         {
-            Debug.Log(_encounterRate);
             if (Random.Range(0f, 100f) <= _encounterRate)
             {
                 break;
@@ -174,6 +180,7 @@ public class StageManager : MonoBehaviour
         _state = StageState.Encounter;
         _backGround.StopScroll();
         _stageLine.PauseRun();
+        _uibtn.AllBtnShutDown();
         _card.SetActive(true);
         _cardScript.CardGenerate();
     }
