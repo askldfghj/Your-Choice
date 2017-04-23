@@ -6,10 +6,14 @@ public class StageManager : MonoBehaviour
     public UIManager _StageUI;
     public GameObject _card;
     public BGScroll _backGround;
+    public StageLineCtrl _stageLine;
     public NarrationCtrl _narration;
     public InventoryManager _invenManager;
     public UILabel _resultDesc;
     public TweenAlpha _resultAlpha;
+    public BoxCollider[] _colliders;
+    public bool[] _collsenabled;
+
 
     WaitForSeconds _encounterSec;
     float _encounterRate;
@@ -24,9 +28,10 @@ public class StageManager : MonoBehaviour
     {
         _state = StageState.Walk;
         Screen.SetResolution(Screen.width, (Screen.width / 16) * 9, true);
-        _encounterSec = new WaitForSeconds(1f);
+        _encounterSec = new WaitForSeconds(3f);
         _encRateInit = 20f;
         _cardScript = _card.GetComponent<CardCtrl>();
+        _collsenabled = new bool[_colliders.Length];
     }
 
     void Start()
@@ -44,16 +49,31 @@ public class StageManager : MonoBehaviour
 
     void FileLoadingEnd()
     {
-        _backGround.StartScroll();
+        SetWalk();
         //나레이션 생성 ex) text = textGenerate(int 인덱스, 정보 등등...);
-        //StartNarration(DataPool._current._DungeonStartDic[Random.Range(0, DataPool._current._DungeonStartDic.Count)]);
         StartNarration(DataPool._current._ScriptionDic["DungeonStart"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["DungeonStart"].Count)]);
 
         //인벤토리 초기화및 정리
         _invenManager.ApplyEquipItems();
-        Time.timeScale = 0f;
         StartStage();
+    }
+
+    public void PauseColliders()
+    {
+        for (int i = 0; i < _colliders.Length; i++)
+        {
+            _collsenabled[i] = _colliders[i].enabled;
+            _colliders[i].enabled = false;
+        }
+    }
+
+    public void ResumeColliders()
+    {
+        for (int i = 0; i < _colliders.Length; i++)
+        {
+            _colliders[i].enabled = _collsenabled[i];
+        }
     }
 
     public void ShowResult(string str)
@@ -121,6 +141,7 @@ public class StageManager : MonoBehaviour
     {
         _state = StageState.Walk;
         _backGround.StartScroll();
+        _stageLine.StartRun();
     }
 
     public void SetEncounter()
@@ -139,6 +160,7 @@ public class StageManager : MonoBehaviour
         _encounterRate = _encRateInit;
         while (true)
         {
+            Debug.Log(_encounterRate);
             if (Random.Range(0f, 100f) <= _encounterRate)
             {
                 break;
@@ -151,6 +173,7 @@ public class StageManager : MonoBehaviour
         }
         _state = StageState.Encounter;
         _backGround.StopScroll();
+        _stageLine.PauseRun();
         _card.SetActive(true);
         _cardScript.CardGenerate();
     }

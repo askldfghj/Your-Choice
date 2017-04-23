@@ -152,7 +152,6 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
                                             [Random.Range(0, DataPool._current._ScriptionDic["PlayerSurprise"].Count)];
                 //적 생존
             }
-            _eventCount++;
             _cardScript.SetFrontDesc(text);
             _enemyObjCtrl.ObjShake();
             //_card.SendMessage("SetFrontDesc", text);
@@ -183,6 +182,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
 
             }
         }
+        _eventCount++;
         _cardScript.ReFlip();
         //_card.SendMessage("ReFlip");
     }

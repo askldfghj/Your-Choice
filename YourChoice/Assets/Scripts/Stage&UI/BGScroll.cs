@@ -9,7 +9,7 @@ public class BGScroll : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        mBGPosiInit = new Vector3(810f, 0, 0);
+        mBGPosiInit = new Vector3(0, 0, 0);
     }
 
     void Start()
@@ -28,7 +28,7 @@ public class BGScroll : MonoBehaviour
         while (true)
         {
             transform.Translate(-_speed * Time.deltaTime, 0, 0);
-            if (transform.localPosition.x < -810f)
+            if (transform.localPosition.x < -900f)
             {
                 transform.localPosition = mBGPosiInit;
             }

@@ -169,6 +169,9 @@
     <Compile Include="Assets\Scripts\ObjectScript\TreasureObjInfo.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\BGScroll.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\DataPool.cs" />
+    <Compile Include="Assets\Scripts\Stage&amp;UI\MenuBtnCtrl.cs" />
+    <Compile Include="Assets\Scripts\Stage&amp;UI\PauseButton.cs" />
+    <Compile Include="Assets\Scripts\Stage&amp;UI\StageLineCtrl.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\StageManager.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\UITextTypeWriter.cs" />
