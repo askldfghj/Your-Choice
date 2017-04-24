@@ -40,8 +40,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
                 //적 처치
 
                 text += "\n" + "적이 쓰러졌다.";
-                //처치보상 함수 필요
-
+                EnemyDown();
                 narration = DataPool._current._ScriptionDic["MonsterDown"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["MonsterDown"].Count)];
 
@@ -137,7 +136,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
 
                 text += "\n" + "적이 쓰러졌다.";
                 //처치보상 함수 필요
-
+                EnemyDown();
                 narration = DataPool._current._ScriptionDic["MonsterDown"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["MonsterDown"].Count)];
 
@@ -186,6 +185,11 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         _eventCount++;
         _cardScript.ReFlip();
         //_card.SendMessage("ReFlip");
+    }
+
+    void EnemyDown()
+    {
+
     }
 
     public void EventCaculate()

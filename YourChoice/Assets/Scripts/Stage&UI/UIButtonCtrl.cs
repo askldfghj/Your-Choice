@@ -3,6 +3,7 @@ using System.Collections;
 
 public class UIButtonCtrl : MonoBehaviour
 {
+    public StageManager _gm;
     public UIBtn _statusBtn;
     public UIBtn _invenBtn;
 
@@ -10,11 +11,13 @@ public class UIButtonCtrl : MonoBehaviour
 
     Vector3 _defaultStatusTrans;
     Vector3 _defaultInvenTrans;
+    bool _fsmCtrl;
 
     void Awake()
     {
         _defaultStatusTrans = _statusBtn.btnTrans.localPosition;
         _defaultInvenTrans = _invenBtn.btnTrans.localPosition;
+        _fsmCtrl = false;
     }
 
     void StatusOpen()
@@ -32,11 +35,17 @@ public class UIButtonCtrl : MonoBehaviour
     {
         StatusTweenOut();
         InvenTweenIn();
+        _fsmCtrl = _gm.SetStop();
     }
 
     void InvenClose()
     {
         InvenTweenOut();
+
+        if (_fsmCtrl)
+        {
+            _gm.SetWalk();
+        }
     }
 
     public void AllBtnShutDown()

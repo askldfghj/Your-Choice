@@ -105,6 +105,7 @@ public class CursorCtrl : MonoBehaviour
         pos.x = Mathf.Clamp01(pos.x / Screen.width);
         pos.y = Mathf.Clamp01(pos.y / Screen.height);
         _itemDesc.transform.position = _uiCamera.ViewportToWorldPoint(pos);
+        _itemDescCtrl.ReLocation();
         _itemDescCtrl.SetDesc(name, point, stat);
     }
 

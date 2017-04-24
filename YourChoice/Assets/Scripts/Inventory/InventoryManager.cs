@@ -13,6 +13,9 @@ public class InventoryManager : MonoBehaviour
     BoxCollider[] _myEquipColliders;
     BoxCollider[] _myBagColliders;
 
+    bool[] _myEquipColEnables;
+    bool[] _myBagColEnables;
+
     void Awake()
     {
         _myEquipInventory = _myEquips.GetComponentsInChildren<ItemIconCtrl>();
@@ -20,6 +23,9 @@ public class InventoryManager : MonoBehaviour
 
         _myEquipColliders = _myEquips.GetComponentsInChildren<BoxCollider>();
         _myBagColliders = _myBags.GetComponentsInChildren<BoxCollider>();
+
+        _myEquipColEnables = new bool[_myEquipColliders.Length];
+        _myBagColEnables = new bool[_myBagColliders.Length];
     }
 
     public void ApplyEquipItems()
@@ -55,6 +61,33 @@ public class InventoryManager : MonoBehaviour
         for (i = 0; i < _myBagColliders.Length; i++)
         {
             _myBagColliders[i].enabled = true;
+        }
+    }
+
+    public void InventoryColliderPause()
+    {
+        int i;
+        for (i = 0; i < _myEquipColliders.Length; i++)
+        {
+            _myEquipColEnables[i] = _myEquipColliders[i].enabled;
+            _myEquipColliders[i].enabled = false;
+        }
+        for (i = 0; i < _myBagColliders.Length; i++)
+        {
+            _myBagColEnables[i] = _myBagColliders[i].enabled;
+            _myBagColliders[i].enabled = false;
+        }
+    }
+    public void InventoryColliderResume()
+    {
+        int i;
+        for (i = 0; i < _myEquipColliders.Length; i++)
+        {
+            _myEquipColliders[i].enabled = _myEquipColEnables[i];
+        }
+        for (i = 0; i < _myBagColliders.Length; i++)
+        {
+            _myBagColliders[i].enabled = _myBagColEnables[i];
         }
     }
 }

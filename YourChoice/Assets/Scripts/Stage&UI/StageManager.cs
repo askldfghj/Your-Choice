@@ -22,7 +22,7 @@ public class StageManager : MonoBehaviour
     float _encRateInit;
     CardCtrl _cardScript;
 
-    enum StageState { Walk = 0, Encounter, End };
+    enum StageState { Walk = 0, Encounter, Stop, End };
     StageState _state;
 
     // Use this for initialization
@@ -63,8 +63,10 @@ public class StageManager : MonoBehaviour
 
     public void PauseColliders()
     {
-        _invenManager.InventoryColliderShutDown();
         _uibtn.AllColliderShutDown();
+
+        _invenManager.InventoryColliderPause();
+
         for (int i = 0; i < _colliders.Length; i++)
         {
             _collsenabled[i] = _colliders[i].enabled;
@@ -75,7 +77,9 @@ public class StageManager : MonoBehaviour
     public void ResumeColliders()
     {
         _uibtn.AllBtnShutOn();
-        _invenManager.InventoryColliderShutOn();
+
+        _invenManager.InventoryColliderResume();
+
         for (int i = 0; i < _colliders.Length; i++)
         {
             _colliders[i].enabled = _collsenabled[i];
@@ -135,6 +139,7 @@ public class StageManager : MonoBehaviour
         if (_state == StageState.Walk)
         {
             StartCoroutine("EventEncounter");
+            _invenManager.InventoryColliderShutOn();
         }
     }
 
@@ -145,10 +150,12 @@ public class StageManager : MonoBehaviour
 
     public void SetWalk()
     {
-        _state = StageState.Walk;
-        _backGround.StartScroll();
-        _stageLine.StartRun();
-        _uibtn.AllBtnShutOn();
+        if (_state != StageState.Encounter)
+        {
+            _state = StageState.Walk;
+            _backGround.StartScroll();
+            _stageLine.StartRun();
+        }
     }
 
     public void SetEncounter()
@@ -161,13 +168,25 @@ public class StageManager : MonoBehaviour
         _state = StageState.End;
     }
 
+    public bool SetStop()
+    {
+        if (_state == StageState.Walk)
+        {
+            _state = StageState.Stop;
+            _backGround.StopScroll();
+            _stageLine.PauseRun();
+            return true;
+        }
+        return false;
+    }
+
     IEnumerator EventEncounter()
     {
         yield return _encounterSec;
         _encounterRate = _encRateInit;
         while (true)
         {
-            if (Random.Range(0f, 100f) <= _encounterRate)
+            if (Random.Range(0f, 100f) <= _encounterRate && _state == StageState.Walk)
             {
                 break;
             }
@@ -180,7 +199,7 @@ public class StageManager : MonoBehaviour
         _state = StageState.Encounter;
         _backGround.StopScroll();
         _stageLine.PauseRun();
-        _uibtn.AllBtnShutDown();
+        _invenManager.InventoryColliderShutDown();
         _card.SetActive(true);
         _cardScript.CardGenerate();
     }
