@@ -24,7 +24,6 @@ public class CaculateScript
 
         return rd;
     }
-
     static MonsterResult PlayerAttack(ObjectInfo enemy)
     {
         //성공확률
@@ -38,7 +37,6 @@ public class CaculateScript
         if (faildam < 0) faildam = 0;
         return new MonsterResult(frequency, dam, faildam);
     }
-
     static MonsterResult PlayerEscape(ObjectInfo enemy)
     {
         //성공확률
@@ -51,7 +49,6 @@ public class CaculateScript
         if (faildam < 0) faildam = 0;
         return new MonsterResult(frequency, dam, faildam);
     }
-
     static MonsterResult PlayerSurprise(ObjectInfo enemy)
     {
         //성공확률
@@ -79,14 +76,6 @@ public class CaculateScript
         rd.SetResult(result);
         return rd;
     }
-
-    public static TrapResult PlayerTraped()
-    {
-        TrapResult result = new TrapResult();
-        result.trapDam = Random.Range(3, 10);
-        return result;
-    }
-
     static TreasureResult TreasureOpen(bool mimic)
     {
         if (!mimic)
@@ -112,6 +101,35 @@ public class CaculateScript
     {
         return null;
     }
+
+    public static TrapResult PlayerTraped()
+    {
+        TrapResult result = new TrapResult();
+        result.trapDam = Random.Range(3, 10);
+        return result;
+    }
+
+    public static ResultAndDesc ShrineEncounter()
+    {
+        ResultAndDesc rd = new ResultAndDesc();
+        ShrineResult[] result = new ShrineResult[3];
+        //타입 설정하는 함수 필요
+        result[0] = GetShrineEffect();
+        result[1] = null;
+        result[2] = null;
+        rd.desc[0] = "1번";
+        rd.desc[1] = "2번";
+        rd.desc[2] = "";
+        rd.SetResult(result);
+        return rd;
+    }
+    static ShrineResult GetShrineEffect()
+    {
+        ShrineResult result = new ShrineResult();
+        //타입 인자로 받아야함
+        result.EffectCaculate();
+        return result;
+    }
 }
 
 public class CaculateResult
@@ -131,7 +149,6 @@ public class MonsterResult : CaculateResult
         _fail = fail;
     }
 }
-
 public class TreasureResult : CaculateResult
 {
     public TreasureObjInfo _treasure;
@@ -139,6 +156,23 @@ public class TreasureResult : CaculateResult
     public TreasureResult()
     {
         _treasure = null;
+    }
+}
+public class ShrineResult : CaculateResult
+{
+    public ShrineObjInfo _shrine;
+
+    public ShrineResult()
+    {
+        _shrine = new ShrineObjInfo();
+    }
+
+    public void EffectCaculate()
+    {
+        //인자 힘의 신단 속도의 신단 등, 신단의 타입
+        //해야하는 일
+        //타입에 따른 저주 or 축복
+        _shrine.SetEffect("sample");
     }
 }
 

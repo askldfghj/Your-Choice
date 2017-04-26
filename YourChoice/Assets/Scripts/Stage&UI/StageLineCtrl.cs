@@ -4,15 +4,20 @@ using System.Collections;
 public class StageLineCtrl : MonoBehaviour
 {
     public float _speed;
-
+    public UILabel _distanceLabel;
     public GameObject _character;
 
     int _defaultStartPosi;
     int _defaultendPosi;
     int _endPosi;
 
+    float _distance;
+
+    float sam;
+
     void Awake()
     {
+        _distance = 0f;
         _defaultStartPosi = -150;
         _defaultendPosi = 120;
         _endPosi = _defaultendPosi;
@@ -21,6 +26,13 @@ public class StageLineCtrl : MonoBehaviour
     void Start()
     {
         _character.transform.localPosition = new Vector3(_defaultStartPosi, 23, 0);
+    }
+
+    void Update()
+    {
+        _distanceLabel.text = string.Format("{0:f0}", _distance) + "m";
+        _distance += Time.deltaTime;
+
     }
 
     public void StartRun()

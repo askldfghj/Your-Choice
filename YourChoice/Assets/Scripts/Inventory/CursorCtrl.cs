@@ -6,6 +6,7 @@ public class CursorCtrl : MonoBehaviour
     public UISprite _sprite;
     public Camera _uiCamera;
     public GameObject _itemDesc;
+    public InventoryManager _invenManager;
 
     UISprite _target;
     ItemIconCtrl _targetInventory;
@@ -52,9 +53,8 @@ public class CursorCtrl : MonoBehaviour
                 ItemIconCtrl colItem = col.GetComponent<ItemIconCtrl>();
                 if (CheckSlotType(_targetInventory, colItem))
                 {
-                    ItemObjInfo temp = colItem._item;
-                    colItem._item = _targetInventory._item;
-                    _targetInventory._item = temp;
+                    //아이템 교체부분
+                    _invenManager.SwapInventory(_targetInventory, colItem);
 
                     if (_targetInventory._InventoryName != "")
                     {

@@ -151,13 +151,14 @@
     <Compile Include="Assets\Scripts\Caculate\CaculateScript.cs" />
     <Compile Include="Assets\Scripts\ControllScript\ButtonCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\CardCtrl.cs" />
-    <Compile Include="Assets\Scripts\ControllScript\EncounterCtrl.cs" />
-    <Compile Include="Assets\Scripts\ControllScript\EventObjCtrl.cs" />
-    <Compile Include="Assets\Scripts\ControllScript\IEventScript.cs" />
+    <Compile Include="Assets\Scripts\ControllScript\Event\EncounterCtrl.cs" />
+    <Compile Include="Assets\Scripts\ControllScript\Event\EventObjCtrl.cs" />
+    <Compile Include="Assets\Scripts\ControllScript\Event\IEventScript.cs" />
+    <Compile Include="Assets\Scripts\ControllScript\Event\ShrineCtrl.cs" />
+    <Compile Include="Assets\Scripts\ControllScript\Event\TrapCtrl.cs" />
+    <Compile Include="Assets\Scripts\ControllScript\Event\TreasureCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\InventoryCtrl.cs" />
     <Compile Include="Assets\Scripts\ControllScript\NarrationCtrl.cs" />
-    <Compile Include="Assets\Scripts\ControllScript\TrapCtrl.cs" />
-    <Compile Include="Assets\Scripts\ControllScript\TreasureCtrl.cs" />
     <Compile Include="Assets\Scripts\Inventory\CursorCtrl.cs" />
     <Compile Include="Assets\Scripts\Inventory\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Inventory\ItemDescCtrl.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Assets\Scripts\ObjectScript\ObjectInfo.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\PlayerInfo.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\PlayerObj.cs" />
+    <Compile Include="Assets\Scripts\ObjectScript\ShrineObjInfo.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\TreasureObjInfo.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\BGScroll.cs" />
     <Compile Include="Assets\Scripts\Stage&amp;UI\DataPool.cs" />

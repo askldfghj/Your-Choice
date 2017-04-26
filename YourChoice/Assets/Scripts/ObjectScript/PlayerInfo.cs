@@ -5,10 +5,12 @@ using System.Collections.Generic;
 public class PlayerInfo : ObjectInfo
 {
     public Dictionary<string, ItemObjInfo> _equipItem;
+    public List<string> _effects;
 
     public PlayerInfo()
     {
         _equipItem = new Dictionary<string, ItemObjInfo>();
+        _effects = new List<string>();
         _equipItem.Add("wep", new ItemObjInfo());
         _equipItem.Add("arm", new ItemObjInfo());
         _equipItem.Add("acc", new ItemObjInfo());
@@ -24,6 +26,7 @@ public class PlayerInfo : ObjectInfo
         _wep = wep;
         _arm = arm;
         _equipItem = new Dictionary<string, ItemObjInfo>();
+        _effects = new List<string>();
         _equipItem.Add("wep", new ItemObjInfo());
         _equipItem.Add("arm", new ItemObjInfo());
         _equipItem.Add("acc", new ItemObjInfo());

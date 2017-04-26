@@ -78,8 +78,7 @@ public class CardCtrl : MonoBehaviour
     public void CardGenerate()
     {
         //카드 종류 얻기
-        //ex
-        _currentEvent = DataPool._current._eventList[1].gameObject;
+        _currentEvent = DataPool._current._eventList[4].gameObject;
 
         //종류에 따른 계산 함수 호출
         _currentEvent.SendMessage("EventCaculate");

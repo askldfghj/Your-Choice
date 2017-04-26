@@ -28,6 +28,32 @@ public class InventoryManager : MonoBehaviour
         _myBagColEnables = new bool[_myBagColliders.Length];
     }
 
+    public void SwapInventory(ItemIconCtrl a, ItemIconCtrl b)
+    {
+        ItemObjInfo temp = a._item;
+        a._item = b._item;
+        b._item = temp;
+    }
+
+    public void EquipToWeapon(ItemIconCtrl targetItem)
+    {
+        ItemObjInfo temp = _myEquipInventory[0]._item;
+        _myEquipInventory[0]._item = targetItem._item;
+        targetItem._item = temp;
+    }
+    public void EquipToArmor(ItemIconCtrl targetItem)
+    {
+        ItemObjInfo temp = _myEquipInventory[1]._item;
+        _myEquipInventory[1]._item = targetItem._item;
+        targetItem._item = temp;
+    }
+    public void EquipToAccessory(ItemIconCtrl targetItem)
+    {
+        ItemObjInfo temp = _myEquipInventory[2]._item;
+        _myEquipInventory[2]._item = targetItem._item;
+        targetItem._item = temp;
+    }
+
     public void ApplyEquipItems()
     {
         PlayerObj._current._playerInfo._equipItem["wep"] = _myEquipInventory[0]._item;
