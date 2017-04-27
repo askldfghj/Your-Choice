@@ -6,26 +6,32 @@ public class CursorCtrl : MonoBehaviour
     public UISprite _sprite;
     public Camera _uiCamera;
     public GameObject _itemDesc;
+    public GameObject _itemUse;
     public InventoryManager _invenManager;
 
-    UISprite _target;
+    UISprite _targetSprite;
     ItemIconCtrl _targetInventory;
     ItemDescCtrl _itemDescCtrl;
+    ItemUseCtrl _itemUseCtrl;
+
+    bool _isDrag;
 
     void Awake()
     {
         _itemDescCtrl = _itemDesc.GetComponent<ItemDescCtrl>();
+        _itemUseCtrl = _itemUse.GetComponent<ItemUseCtrl>();
     }
 
     void OnEnable()
     {
-        _target = null;
+        _targetSprite = null;
         _itemDesc.SetActive(false);
+        _isDrag = false;
     }
 
     public void PressCursor(ItemIconCtrl icon, Vector3 pos, string name)
     {
-        _target = icon._sprite;
+        _targetSprite = icon._sprite;
         _targetInventory = icon;
         pos.z = 0f;
         transform.position = pos;
@@ -36,6 +42,7 @@ public class CursorCtrl : MonoBehaviour
 
     public void Drag()
     {
+        _isDrag = true;
         Vector3 pos = Input.mousePosition;
         pos.x = Mathf.Clamp01(pos.x / Screen.width);
         pos.y = Mathf.Clamp01(pos.y / Screen.height);
@@ -44,58 +51,86 @@ public class CursorCtrl : MonoBehaviour
 
     public void Drop()
     {
-        Collider col = UICamera.lastHit.collider;
-
-        if (col != null)
+        if (_isDrag)
         {
-            if (col.tag == "ItemSlot" || col.tag == "EquipSlot")
+            Collider col = UICamera.lastHit.collider;
+
+            if (col != null)
             {
-                ItemIconCtrl colItem = col.GetComponent<ItemIconCtrl>();
-                if (CheckSlotType(_targetInventory, colItem))
+                if (col.tag == "ItemSlot" || col.tag == "EquipSlot")
                 {
-                    //아이템 교체부분
-                    _invenManager.SwapInventory(_targetInventory, colItem);
+                    ItemIconCtrl colItem = col.GetComponent<ItemIconCtrl>();
+                    if (CheckSlotType(_targetInventory, colItem))
+                    {
+                        //아이템 교체부분
+                        _invenManager.SwapInventory(_targetInventory, colItem);
 
-                    if (_targetInventory._InventoryName != "")
-                    {
-                        PlayerObj._current.SelectApplyEquipItem(_targetInventory._InventoryName);
-                    }
-                    else if (colItem._InventoryName != "")
-                    {
-                        PlayerObj._current.SelectApplyEquipItem(colItem._InventoryName);
-                    }
+                        if (_targetInventory._InventoryName != "")
+                        {
+                            PlayerObj._current.SelectApplyEquipItem(_targetInventory._InventoryName);
+                        }
+                        else if (colItem._InventoryName != "")
+                        {
+                            PlayerObj._current.SelectApplyEquipItem(colItem._InventoryName);
+                        }
 
-                    UISprite spr = col.GetComponent<ItemIconCtrl>()._sprite;
-                    if (spr.enabled)
-                    {
-                        _target.enabled = true;
-                        _target.spriteName = spr.spriteName;
+                        UISprite spr = col.GetComponent<ItemIconCtrl>()._sprite;
+                        if (spr.enabled)
+                        {
+                            _targetSprite.enabled = true;
+                            _targetSprite.spriteName = spr.spriteName;
+                        }
+                        else
+                        {
+                            _targetSprite.enabled = false;
+                            spr.enabled = true;
+                        }
+                        spr.spriteName = _sprite.spriteName;
                     }
                     else
                     {
-                        _target.enabled = false;
-                        spr.enabled = true;
+                        _targetSprite.enabled = true;
                     }
-                    spr.spriteName = _sprite.spriteName;
                 }
                 else
                 {
-                    _target.enabled = true;
+                    _targetSprite.enabled = true;
                 }
+                _sprite.enabled = false;
             }
             else
             {
-                _target.enabled = true;
+                _targetSprite.enabled = true;
+                _sprite.enabled = false;
             }
-            _sprite.enabled = false;
         }
-        else
+        _isDrag = false;
+    }
+
+    public void ItemClick()
+    {
+        _targetSprite.enabled = true;
+        _sprite.enabled = false;
+        if (!_isDrag)
         {
-            _target.enabled = true;
+            _itemUse.SetActive(true);
+
+            Vector3 pos = Input.mousePosition;
+            pos.x = Mathf.Clamp01(pos.x / Screen.width);
+            pos.y = Mathf.Clamp01(pos.y / Screen.height);
+            _itemUse.transform.position = _uiCamera.ViewportToWorldPoint(pos);
+
+            if (_targetInventory._slotType == "slot")
+            {
+                _itemUseCtrl.SetEquipBtn(_targetInventory);
+            }
+            else
+            {
+                _itemUseCtrl.SetUnEquipBtn(_targetInventory);
+            }
+            _targetSprite.enabled = true;
             _sprite.enabled = false;
         }
-        _target = null;
-        _targetInventory = null;
     }
 
     public void ShowItemDesc(string name, string point, string stat)
@@ -118,9 +153,28 @@ public class CursorCtrl : MonoBehaviour
     {
         if (b.tag == "EquipSlot")
         {
+            if (a.tag == "EquipSlot")
+            {
+                return false;
+            }
+
             if (a._item._itemType != b._slotType)
             {
                 return false;
+            }
+        }
+        else if (b.tag == "ItemSlot")
+        {
+            if (!b._sprite.enabled)
+            {
+                return true;
+            }
+            if (a.tag == "EquipSlot")
+            {
+                if (a._item._itemType != b._item._itemType)
+                {
+                    return false;
+                }
             }
         }
         return true;
@@ -128,10 +182,10 @@ public class CursorCtrl : MonoBehaviour
 
     void ShutDown()
     {
-        if (_target == null || _targetInventory == null) return;
+        if (_targetSprite == null || _targetInventory == null) return;
         else
         {
-            _target.enabled = true;
+            _targetSprite.enabled = true;
             _sprite.enabled = false;
         }
     }

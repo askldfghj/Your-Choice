@@ -10,11 +10,17 @@ public class ItemIconCtrl : MonoBehaviour
     CursorCtrl _cursor;
 
     bool _isDrag = false;
+    bool _isClick = false;
 
     void Awake()
     {
         _cursor = GameObject.Find("Cursor").GetComponent<CursorCtrl>();
+    }
 
+    void OnEnable()
+    {
+        _isDrag = false;
+        _isClick = false;
     }
 
     void Start()
@@ -64,6 +70,7 @@ public class ItemIconCtrl : MonoBehaviour
             if (_sprite.enabled)
             {
                 _isDrag = true;
+                _isClick = true;
                 _cursor.PressCursor(this, transform.position, _sprite.spriteName);
                 _sprite.enabled = false;
             }
@@ -75,6 +82,15 @@ public class ItemIconCtrl : MonoBehaviour
                 _cursor.Drop();
             }
             _isDrag = false;
+        }
+    }
+
+    void OnClick()
+    {
+        if (_isClick)
+        {
+            _cursor.ItemClick();
+            _isClick = false;
         }
     }
 

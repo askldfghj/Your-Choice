@@ -163,6 +163,7 @@
     <Compile Include="Assets\Scripts\Inventory\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Inventory\ItemDescCtrl.cs" />
     <Compile Include="Assets\Scripts\Inventory\ItemIconCtrl.cs" />
+    <Compile Include="Assets\Scripts\Inventory\ItemUseCtrl.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\EventObject.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\ItemObjInfo.cs" />
     <Compile Include="Assets\Scripts\ObjectScript\ObjectInfo.cs" />

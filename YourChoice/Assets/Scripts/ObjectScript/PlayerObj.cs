@@ -14,6 +14,7 @@ public class PlayerObj : MonoBehaviour
         _current = this;
 
         _playerInfo = new PlayerInfo("player", 30, 5, 5, 5, 0, 0);
+        _playerInfo._levelPoint = 10;
     }
 
     public void ApplyWeapon()

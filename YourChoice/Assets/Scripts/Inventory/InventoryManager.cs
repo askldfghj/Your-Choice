@@ -40,18 +40,47 @@ public class InventoryManager : MonoBehaviour
         ItemObjInfo temp = _myEquipInventory[0]._item;
         _myEquipInventory[0]._item = targetItem._item;
         targetItem._item = temp;
+
+        bool isenable = _myEquipInventory[0]._sprite.enabled;
+        targetItem._sprite.enabled = isenable;
+        _myEquipInventory[0]._sprite.enabled = true;
     }
     public void EquipToArmor(ItemIconCtrl targetItem)
     {
         ItemObjInfo temp = _myEquipInventory[1]._item;
         _myEquipInventory[1]._item = targetItem._item;
         targetItem._item = temp;
+
+        bool isenable = _myEquipInventory[1]._sprite.enabled;
+        targetItem._sprite.enabled = isenable;
+        _myEquipInventory[1]._sprite.enabled = true;
     }
     public void EquipToAccessory(ItemIconCtrl targetItem)
     {
         ItemObjInfo temp = _myEquipInventory[2]._item;
         _myEquipInventory[2]._item = targetItem._item;
         targetItem._item = temp;
+
+        bool isenable = _myEquipInventory[2]._sprite.enabled;
+        targetItem._sprite.enabled = isenable;
+        _myEquipInventory[2]._sprite.enabled = true;
+    }
+
+    public void UnEquipItem(ItemIconCtrl targetItem)
+    {
+        int index = 0;
+        while (index < _myBagInventory.Length)
+        {
+            if (!_myBagInventory[index]._sprite.enabled) break;
+            index++;
+        }
+        if (index < _myBagInventory.Length)
+        {
+            _myBagInventory[index]._item = targetItem._item;
+            _myBagInventory[index]._sprite.spriteName = _myBagInventory[index]._item._spriteName;
+        }
+        _myBagInventory[index]._sprite.enabled = true;
+        targetItem._sprite.enabled = false;
     }
 
     public void ApplyEquipItems()

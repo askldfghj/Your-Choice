@@ -6,6 +6,8 @@ public class PlayerInfo : ObjectInfo
 {
     public Dictionary<string, ItemObjInfo> _equipItem;
     public List<string> _effects;
+    public int _levelPoint;
+    public int _exp;
 
     public PlayerInfo()
     {

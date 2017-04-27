@@ -9,10 +9,12 @@ public class StageManager : MonoBehaviour
     public StageLineCtrl _stageLine;
     public NarrationCtrl _narration;
     public InventoryManager _invenManager;
+    public StatusWindowCtrl _stautsWindow;
     public UILabel _resultDesc;
     public TweenAlpha _resultAlpha;
     public BoxCollider[] _colliders;
     public UIButtonCtrl _uibtn;
+    public ItemUseCtrl _itemUse;
 
     bool[] _collsenabled;
 
@@ -64,9 +66,9 @@ public class StageManager : MonoBehaviour
     public void PauseColliders()
     {
         _uibtn.AllColliderShutDown();
-
+        _itemUse.PauseColliders();
         _invenManager.InventoryColliderPause();
-
+        _stautsWindow.PauseColliders();
         for (int i = 0; i < _colliders.Length; i++)
         {
             _collsenabled[i] = _colliders[i].enabled;
@@ -77,9 +79,9 @@ public class StageManager : MonoBehaviour
     public void ResumeColliders()
     {
         _uibtn.AllBtnShutOn();
-
+        _itemUse.ResumeColliders();
         _invenManager.InventoryColliderResume();
-
+        _stautsWindow.ResumeColliders();
         for (int i = 0; i < _colliders.Length; i++)
         {
             _colliders[i].enabled = _collsenabled[i];
@@ -140,6 +142,7 @@ public class StageManager : MonoBehaviour
         {
             StartCoroutine("EventEncounter");
             _invenManager.InventoryColliderShutOn();
+            _stautsWindow.ResumeColliders();
         }
     }
 
@@ -200,6 +203,7 @@ public class StageManager : MonoBehaviour
         _backGround.StopScroll();
         _stageLine.PauseRun();
         _invenManager.InventoryColliderShutDown();
+        _stautsWindow.PauseColliders();
         _card.SetActive(true);
         _cardScript.CardGenerate();
     }
