@@ -9,7 +9,7 @@ public class ShrineCtrl : MonoBehaviour, IEventScript
     public StageManager _gm;
 
     CardCtrl _cardScript;
-    ObjectInfo _ShrineInfo;
+    ShrineObjInfo _ShrineInfo;
     ResultAndDesc _resultAndDesc;
     ShrineResult[] _result;
     string[] _commands;
@@ -53,7 +53,7 @@ public class ShrineCtrl : MonoBehaviour, IEventScript
     public void EventCaculate()
     {
         //오브젝트 그림 생성
-        _ShrineInfo = (ObjectInfo)DataPool._current._eventObjDic["Monster"][0].Clone();
+        //_ShrineInfo
 
         _ObejctCtrl.OnObject();
 

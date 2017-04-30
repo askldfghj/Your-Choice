@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TreasureScription xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <FindBox>
+    <ID>0</ID>
+    <Text>보물상자를 발견했다. 어떻게 할까.</Text>
+  </FindBox>
+  <FindTresure>
+    <ID>0</ID>
+    <Text>물건들을 발견했다.</Text>
+  </FindTresure>
+  <NotTresure>
+    <ID>0</ID>
+    <Text>상자의 바닥까지 더듬어보지만 먼지뿐이었다.</Text>
+  </NotTresure>
+  <Mimic>
+    <ID>0</ID>
+    <Text>당신은 반쯤 삼켜져서야 무슨일이 일어났는지 깨달았다.</Text>
+  </Mimic>
+  <BoxSkip>
+    <ID>0</ID>
+    <Text>상자안에 무엇이 있었을까 하며 상상해보지만, 이미 지난 일이다.</Text>
+  </BoxSkip>
+  <Broken>
+    <ID>0</ID>
+    <Text>당신의 무기가. 상자를 완전히 바스러뜨렸다. 당신이 바랬던 보물과 함께.</Text>
+  </Broken>
+  <BrokenMimic>
+    <ID>0</ID>
+    <Text>이 악마같은 놈의 함정이 당신의 손에 의해 밝혀졌다!</Text>
+  </BrokenMimic>
+</TreasureScription>
+

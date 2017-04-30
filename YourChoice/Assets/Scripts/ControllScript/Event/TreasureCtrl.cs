@@ -31,12 +31,16 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
         if (!mimic)
         {
             text = _result[0]._treasure._items[0]._name + " 획득\n" + _result[0]._treasure.gold + " 골드 획득";
+            narration = DataPool._current._ScriptionDic["FindTresure"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["FindTresure"].Count)];
             _gm.StartNarration(narration);
             _gm.SetEnd();
             _cardScript.CardEnd();
         }
         else
         {
+            narration = DataPool._current._ScriptionDic["Mimic"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["Mimic"].Count)];
             _gm.StartNarration(narration);
             text = "응 미믹";
             ObjectInfo enemy = (ObjectInfo)DataPool._current._eventObjDic["Mimic"][0].Clone();
@@ -50,6 +54,8 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
     {
         string narration = "";
         string text = "무시하고 지나쳤다.";
+        narration = DataPool._current._ScriptionDic["BoxSkip"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["BoxSkip"].Count)];
         _gm.StartNarration(narration);
         _gm.SetEnd();
         _cardScript.SetFrontDesc(text);
@@ -64,12 +70,16 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
         if (!mimic)
         {
             text = "상자는 산산조각이 났다.";
+            narration = DataPool._current._ScriptionDic["Broken"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["Broken"].Count)];
             _gm.StartNarration(narration);
             _gm.SetEnd();
             _cardScript.CardEnd();
         }
         else
         {
+            narration = DataPool._current._ScriptionDic["BrokenMimic"]
+                                            [Random.Range(0, DataPool._current._ScriptionDic["BrokenMimic"].Count)];
             _gm.StartNarration(narration);
             text = "미믹이 맞았다!";
             ObjectInfo enemy = (ObjectInfo)DataPool._current._eventObjDic["Mimic"][0].Clone();

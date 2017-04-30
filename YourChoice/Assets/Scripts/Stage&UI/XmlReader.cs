@@ -33,26 +33,30 @@ public class XmlReader : MonoBehaviour {
         nodes = xmldoc.SelectNodes("MonsterSet/Monster");
         for (int i = 0; i < nodes.Count; i++)
         {
-            DataPool._current._eventObjDic["Monster"].Add(new ObjectInfo(nodes[i].SelectSingleNode("Name").InnerText,
+            DataPool._current._eventObjDic["Monster"].Add(new EnemyObjInfo(nodes[i].SelectSingleNode("Name").InnerText,
                                     int.Parse(nodes[i].SelectSingleNode("HP").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("STR").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("DEX").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("INT").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("WEP").InnerText),
-                                    int.Parse(nodes[i].SelectSingleNode("ARM").InnerText)));
+                                    int.Parse(nodes[i].SelectSingleNode("ARM").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("EXP").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("GOLD").InnerText)));
             yield return null;
         }
 
         nodes = xmldoc.SelectNodes("MonsterSet/Mimic");
         for (int i = 0; i < nodes.Count; i++)
         {
-            DataPool._current._eventObjDic["Mimic"].Add(new ObjectInfo(nodes[i].SelectSingleNode("Name").InnerText,
+            DataPool._current._eventObjDic["Mimic"].Add(new EnemyObjInfo(nodes[i].SelectSingleNode("Name").InnerText,
                                     int.Parse(nodes[i].SelectSingleNode("HP").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("STR").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("DEX").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("INT").InnerText),
                                     int.Parse(nodes[i].SelectSingleNode("WEP").InnerText),
-                                    int.Parse(nodes[i].SelectSingleNode("ARM").InnerText)));
+                                    int.Parse(nodes[i].SelectSingleNode("ARM").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("EXP").InnerText),
+                                    int.Parse(nodes[i].SelectSingleNode("GOLD").InnerText)));
             yield return null;
         }
 

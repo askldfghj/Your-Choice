@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Scription xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DungeonNarration>
+    <DungeonStart>
+      <ID>0</ID>
+      <Text>당신은 태어나서 처음으로 마을 밖을 나왔다. 태어나서 처음 말이다.</Text>
+    </DungeonStart>
+    <DungeonStart>
+      <ID>1</ID>
+      <Text>당신의 첫 모험이다. 사실 이 말에는 큰 어폐가 있다.</Text>
+    </DungeonStart>
+    <DungeonStart>
+      <ID>2</ID>
+      <Text>당신은 경비병의 무릎이야기를 듣고 호기심에 못이겨 뛰쳐나왔지만 앞은 막막하기만 하다.</Text>
+    </DungeonStart>
+    <DungeonStart>
+      <ID>3</ID>
+      <Text>집안 등쌀에 못이겨 뛰쳐나온 당신이다. 일단은 앞으로 나가려고 마음 먹었다.</Text>
+    </DungeonStart>
+    <DungeonStart>
+      <ID>4</ID>
+      <Text>당신은 일확천금의 꿈을 꾸고 마을을 나섰다. 눈에 불을 켜고 보물을 탐색하기 시작한다.</Text>
+    </DungeonStart>
+    <DungeonStart>
+      <ID>5</ID>
+      <Text>당신은 마왕을 토벌하기위해, 국가에서 차출된 병사다. 하지만 장비는 다른 모험가들과 다를 바 없다.</Text>
+    </DungeonStart>
+  </DungeonNarration>
+</Scription>

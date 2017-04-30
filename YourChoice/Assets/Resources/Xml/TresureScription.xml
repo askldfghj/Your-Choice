@@ -1,32 +1,59 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <TreasureScription xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <FindBox>
-    <ID>0</ID>
-    <Text>보물상자를 발견했다. 어떻게 할까.</Text>
-  </FindBox>
-  <FindTresure>
-    <ID>0</ID>
-    <Text>물건들을 발견했다.</Text>
-  </FindTresure>
-  <NotTresure>
-    <ID>0</ID>
-    <Text>상자의 바닥까지 더듬어보지만 먼지뿐이었다.</Text>
-  </NotTresure>
-  <Mimic>
-    <ID>0</ID>
-    <Text>당신은 반쯤 삼켜져서야 무슨일이 일어났는지 깨달았다.</Text>
-  </Mimic>
-  <BoxSkip>
-    <ID>0</ID>
-    <Text>상자안에 무엇이 있었을까 하며 상상해보지만, 이미 지난 일이다.</Text>
-  </BoxSkip>
-  <Broken>
-    <ID>0</ID>
-    <Text>당신의 무기가. 상자를 완전히 바스러뜨렸다. 당신이 바랬던 보물과 함께.</Text>
-  </Broken>
-  <BrokenMimic>
-    <ID>0</ID>
-    <Text>이 악마같은 놈의 함정이 당신의 손에 의해 밝혀졌다!</Text>
-  </BrokenMimic>
+	<FindBox>
+		<ID>0</ID>
+		<Text>보물상자를 발견했다. 어떻게 할까.</Text>
+	</FindBox>
+	<FindBox>
+		<ID>1</ID>
+		<Text>수풀 사이에 숨겨져 있던 상자를 발견하였다.</Text>
+	</FindBox>
+	<FindTresure>
+		<ID>0</ID>
+		<Text>물건들을 발견했다.</Text>
+	</FindTresure>
+	<FindTresure>
+		<ID>1</ID>
+		<Text>아이템이다!</Text>
+	</FindTresure>
+	<NotTresure>
+		<ID>0</ID>
+		<Text>상자의 바닥까지 더듬어보지만 먼지뿐이었다.</Text>
+	</NotTresure>
+	<NotTresure>
+		<ID>1</ID>
+		<Text>쓸데없은 기대였다.</Text>
+	</NotTresure>
+	<Mimic>
+		<ID>0</ID>
+		<Text>당신은 반쯤 삼켜져서야 무슨일이 일어났는지 깨달았다.</Text>
+	</Mimic>
+	<Mimic>
+		<ID>1</ID>
+		<Text>날카로운 이빨이 그대를 습격했다.</Text>
+	</Mimic>
+	<BoxSkip>
+		<ID>0</ID>
+		<Text>상자안에 무엇이 있었을까 하며 상상해보지만, 이미 지난 일이다.</Text>
+	</BoxSkip>
+	<BoxSkip>
+		<ID>1</ID>
+		<Text>그대는 미믹이었겠거니, 하며 애써 마음을 달래본다.</Text>
+	</BoxSkip>
+	<Broken>
+		<ID>0</ID>
+		<Text>당신의 무기가 상자를 완전히 바스러뜨렸다. 당신이 바랬던 보물과 함께.</Text>
+	</Broken>
+	<Broken>
+		<ID>1</ID>
+		<Text>미믹같은 소리하네.</Text>
+	</Broken>
+	<BrokenMimic>
+		<ID>0</ID>
+		<Text>이 악마같은 놈의 함정이 당신의 손에 의해 밝혀졌다!</Text>
+	</BrokenMimic>
+	<BrokenMimic>
+		<ID>1</ID>
+		<Text>정신차려라! 놈은 보물같은 것이 아니었다!</Text>
+	</BrokenMimic>
 </TreasureScription>
-

@@ -156,6 +156,10 @@
     <None Include="Assets\Resources\Xml\EnCounterScription.xml" />
     <None Include="Assets\Resources\Xml\TresureScription.xml" />
     <None Include="Assets\Resources\Xml\monsterInfo.xml" />
+    <None Include="Assets\Resources\Xml\temp\DungeonScription.xml" />
+    <None Include="Assets\Resources\Xml\temp\EnCounterScription.xml" />
+    <None Include="Assets\Resources\Xml\temp\TresureScription.xml" />
+    <None Include="Assets\Resources\Xml\temp\monsterInfo.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

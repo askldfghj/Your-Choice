@@ -28,13 +28,6 @@ public class StageLineCtrl : MonoBehaviour
         _character.transform.localPosition = new Vector3(_defaultStartPosi, 23, 0);
     }
 
-    void Update()
-    {
-        _distanceLabel.text = string.Format("{0:f0}", _distance) + "m";
-        _distance += Time.deltaTime;
-
-    }
-
     public void StartRun()
     {
         StartCoroutine("Run");
@@ -50,6 +43,8 @@ public class StageLineCtrl : MonoBehaviour
         while (_character.transform.position.x < _endPosi)
         {
             _character.transform.Translate(_speed * Time.deltaTime, 0, 0);
+            _distanceLabel.text = string.Format("{0:f0}", _distance) + "m";
+            _distance += Time.deltaTime;
             yield return null;
         }
     }

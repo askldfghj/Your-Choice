@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ShrineObjInfo : ObjectInfo
+public class ShrineObjInfo : EventObject
 {
     public string _effect;
 

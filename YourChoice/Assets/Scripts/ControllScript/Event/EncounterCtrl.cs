@@ -32,8 +32,6 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             //성공
             string text = "그대는 " + _enemyInfo._name + "에게 " + _result[0]._success + "의 데미지를 입혔다.";
             _enemyInfo._health -= _result[0]._success;
-            
-
             string narration;
             if (_enemyInfo._health < 0)
             {
@@ -97,11 +95,9 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         {
             //성공
             _cardScript.SetFrontDesc("도망에 성공했다.");
-            //_card.SendMessage("SetFrontDesc", "도망에 성공했다.");
             _gm.StartNarration(DataPool._current._ScriptionDic["RunSuccess"]
                                         [Random.Range(0, DataPool._current._ScriptionDic["RunSuccess"].Count)]);
             _cardScript.CardEnd();
-            //_card.SendMessage("CardEnd");
             _enemyObjCtrl.CloseObject();
             _gm.SetEnd();
         }
@@ -109,7 +105,6 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         {
             //실패
             _cardScript.SetFrontDesc(_enemyInfo._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
-            //_card.SendMessage("SetFrontDesc", _enemy._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
             _gm.StartNarration(DataPool._current._ScriptionDic["RunFail"]
                                         [Random.Range(0, DataPool._current._ScriptionDic["RunFail"].Count)]);
             _player.Damaged(3);
@@ -195,7 +190,8 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
     public void EventCaculate()
     {
         //적 생성
-        _enemyInfo = (ObjectInfo)DataPool._current._eventObjDic["Monster"][0].Clone();
+        _enemyInfo = (ObjectInfo)DataPool._current._eventObjDic["Monster"]
+                                    [Random.Range(0, DataPool._current._eventObjDic["Monster"].Count)].Clone();
         _eventCount = 0;
 
         _enemyObjCtrl.OnObject();
@@ -205,9 +201,6 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         _cardScript.CardSetting(_resultAndDesc.desc);
         _cardScript.SetFrontDesc(DataPool._current._ScriptionDic["EncounterMessage"]
                                     [Random.Range(0, DataPool._current._ScriptionDic["EncounterMessage"].Count)]);
-        //_card.SendMessage("CardSetting", _resultAndDesc.desc);
-        //_card.SendMessage("SetFrontDesc", DataPool._current._ScriptionDic["EncounterMessage"]
-                                    //[Random.Range(0, DataPool._current._ScriptionDic["EncounterMessage"].Count)]);
     }
 
     public void EventCaculateAfter(ObjectInfo enemy)
@@ -215,6 +208,8 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         //적 생성
         _enemyInfo = enemy;
         _eventCount = 1;
+
+        _enemyObjCtrl.OnObject();
 
         _resultAndDesc = CaculateScript.MonsterEncounter(_enemyInfo);
         _result = (MonsterResult[])_resultAndDesc.result;

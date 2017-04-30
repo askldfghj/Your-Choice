@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MonsterSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Monster>
+    <ID>0</ID>
+    <Name>고블린</Name>
+    <HP>10</HP>
+    <STR>3</STR>
+    <DEX>1</DEX>
+    <INT>0</INT>
+    <WEP>2</WEP>
+    <ARM>0</ARM>
+    <EXP>2</EXP>
+    <GOLD>6</GOLD>
+  </Monster>
+  <Mimic>
+    <ID>0</ID>
+    <Name>혀내민 상자</Name>
+    <HP>15</HP>
+    <STR>2</STR>
+    <DEX>3</DEX>
+    <INT>1</INT>
+    <WEP>0</WEP>
+    <ARM>0</ARM>
+    <EXP>7</EXP>
+    <GOLD>100</GOLD>
+  </Mimic>
+</MonsterSet>

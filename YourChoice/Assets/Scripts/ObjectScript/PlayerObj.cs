@@ -54,6 +54,21 @@ public class PlayerObj : MonoBehaviour
         _playerInfo._health -= dam;
     }
 
+    public void GetExperience(int exp)
+    {
+        _playerInfo._exp += exp;
+        if (_playerInfo._exp > 100)
+        {
+            _playerInfo._exp =- 100;
+            LevelUp();
+        }
+    }
+
+    void LevelUp()
+    {
+        _playerInfo._levelPoint += 5;
+    }
+
     public void ObjShake()
     {
         transform.localPosition = _originPos;
