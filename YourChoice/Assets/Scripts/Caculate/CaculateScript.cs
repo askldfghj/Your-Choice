@@ -62,6 +62,10 @@ public class CaculateScript
         if (faildam < 0) faildam = 0;
         return new MonsterResult(frequency, dam, faildam);
     }
+    public static int MonsterAttack(ObjectInfo enemy)
+    {
+        return 3;
+    }
 
     public static ResultAndDesc TreasureEncounter(bool mimic)
     {

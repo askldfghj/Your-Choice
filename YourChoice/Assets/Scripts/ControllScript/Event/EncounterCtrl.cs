@@ -9,7 +9,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
     public StageManager _gm;
 
     CardCtrl _cardScript;
-    ObjectInfo _enemyInfo;
+    EnemyObjInfo _enemyInfo;
     ResultAndDesc _resultAndDesc;
     MonsterResult[] _result;
     string[] _commands;
@@ -36,13 +36,11 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             if (_enemyInfo._health < 0)
             {
                 //적 처치
-
-                text += "\n" + "적이 쓰러졌다.";
                 EnemyDown();
+                text += "\n" + "적이 쓰러졌다.";
                 narration = DataPool._current._ScriptionDic["MonsterDown"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["MonsterDown"].Count)];
-
-                _cardScript.CardEnd();
+                _cardScript.CardEnd(ResultMessage());
                 //_card.SendMessage("CardEnd");
 
                 _enemyObjCtrl.CloseObject();
@@ -67,11 +65,11 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             if (Random.Range(0.1f, 100f) <= 70)
             {
                 //적의 공격 성공
+
                 _cardScript.SetFrontDesc(_enemyInfo._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
-                //_card.SendMessage("SetFrontDesc", _enemy._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
                 _gm.StartNarration(DataPool._current._ScriptionDic["MonsterAttack"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["MonsterAttack"].Count)]);
-                _player.Damaged(3);
+                _player.Damaged(CaculateScript.MonsterAttack(_enemyInfo));
                 _player.ObjShake();
                 _gm.SetPlayerHPOnUI();
             }
@@ -97,8 +95,9 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             _cardScript.SetFrontDesc("도망에 성공했다.");
             _gm.StartNarration(DataPool._current._ScriptionDic["RunSuccess"]
                                         [Random.Range(0, DataPool._current._ScriptionDic["RunSuccess"].Count)]);
-            _cardScript.CardEnd();
+            _cardScript.CardEnd(ResultMessage());
             _enemyObjCtrl.CloseObject();
+            _gm.ShowResult("");
             _gm.SetEnd();
         }
         else
@@ -107,7 +106,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             _cardScript.SetFrontDesc(_enemyInfo._name + "(는/이) 그대에게 3의 데미지를 입혔다.");
             _gm.StartNarration(DataPool._current._ScriptionDic["RunFail"]
                                         [Random.Range(0, DataPool._current._ScriptionDic["RunFail"].Count)]);
-            _player.Damaged(3);
+            _player.Damaged(CaculateScript.MonsterAttack(_enemyInfo));
             _player.ObjShake();
             _gm.SetPlayerHPOnUI();
         }
@@ -128,15 +127,12 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             if (_enemyInfo._health < 0)
             {
                 //적 처치
-
-                text += "\n" + "적이 쓰러졌다.";
-                //처치보상 함수 필요
                 EnemyDown();
+                text += "\n" + "적이 쓰러졌다.";
                 narration = DataPool._current._ScriptionDic["MonsterDown"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["MonsterDown"].Count)];
 
-                _cardScript.CardEnd();
-                //_card.SendMessage("CardEnd");
+                _cardScript.CardEnd(ResultMessage());
 
                 _enemyObjCtrl.CloseObject();
                 _gm.SetEnd();
@@ -149,7 +145,6 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             }
             _cardScript.SetFrontDesc(text);
             _enemyObjCtrl.ObjShake();
-            //_card.SendMessage("SetFrontDesc", text);
             _gm.StartNarration(narration);
 
         }
@@ -160,10 +155,9 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             {
                 //적의 공격 성공
                 _cardScript.SetFrontDesc(_enemyInfo._name + "(는/이) 그대에게 6의 데미지를 입혔다.");
-                //_card.SendMessage("SetFrontDesc", _enemy._name + "(는/이) 그대에게 6의 데미지를 입혔다.");
                 _gm.StartNarration(DataPool._current._ScriptionDic["MonsterSurprise"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["MonsterSurprise"].Count)]);
-                _player.Damaged(3*2);
+                _player.Damaged(CaculateScript.MonsterAttack(_enemyInfo)*2);
                 _player.ObjShake();
                 _gm.SetPlayerHPOnUI();
             }
@@ -171,7 +165,6 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
             {
                 //적의 공격 실패
                 _cardScript.SetFrontDesc("서로 회피하였다.");
-                //_card.SendMessage("SetFrontDesc", "서로 회피하였다.");
                 _gm.StartNarration(DataPool._current._ScriptionDic["Miss"]
                                             [Random.Range(0, DataPool._current._ScriptionDic["Miss"].Count)]);
 
@@ -179,18 +172,26 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         }
         _eventCount++;
         _cardScript.ReFlip();
-        //_card.SendMessage("ReFlip");
+    }
+
+    string ResultMessage()
+    {
+        string result = "";
+
+        result = "획득 경험치 : " + _enemyInfo._exp + "\n획득 골드 : " + _enemyInfo._gold;
+
+        return result;
     }
 
     void EnemyDown()
     {
-
+        _player.GetExperience(_enemyInfo._exp);
     }
 
     public void EventCaculate()
     {
         //적 생성
-        _enemyInfo = (ObjectInfo)DataPool._current._eventObjDic["Monster"]
+        _enemyInfo = (EnemyObjInfo)DataPool._current._eventObjDic["Monster"]
                                     [Random.Range(0, DataPool._current._eventObjDic["Monster"].Count)].Clone();
         _eventCount = 0;
 
@@ -206,7 +207,7 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
     public void EventCaculateAfter(ObjectInfo enemy)
     {
         //적 생성
-        _enemyInfo = enemy;
+        _enemyInfo = (EnemyObjInfo)enemy;
         _eventCount = 1;
 
         _enemyObjCtrl.OnObject();
@@ -214,6 +215,11 @@ public class EncounterCtrl : MonoBehaviour, IEventScript
         _resultAndDesc = CaculateScript.MonsterEncounter(_enemyInfo);
         _result = (MonsterResult[])_resultAndDesc.result;
         _cardScript.CardSetting(_resultAndDesc.desc);
+    }
+    public void MonsterFirstAttck()
+    {
+        _player.Damaged(CaculateScript.MonsterAttack(_enemyInfo));
+        _player.ObjShake();
     }
 
     public void GetCommands(ref string[] _gmCommands)

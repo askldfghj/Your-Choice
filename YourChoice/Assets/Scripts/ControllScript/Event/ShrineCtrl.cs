@@ -35,7 +35,7 @@ public class ShrineCtrl : MonoBehaviour, IEventScript
         _gm.StartNarration(narration);
         _gm.SetEnd();
         _cardScript.SetFrontDesc(text);
-        _cardScript.CardEnd();
+        _cardScript.CardEnd("");
         _cardScript.ReFlip();
     }
 
@@ -46,7 +46,7 @@ public class ShrineCtrl : MonoBehaviour, IEventScript
         _gm.StartNarration(narration);
         _gm.SetEnd();
         _cardScript.SetFrontDesc(text);
-        _cardScript.CardEnd();
+        _cardScript.CardEnd("");
         _cardScript.ReFlip();
     }
 

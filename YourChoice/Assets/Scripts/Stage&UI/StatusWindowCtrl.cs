@@ -25,6 +25,7 @@ public class StatusWindowCtrl : MonoBehaviour
         _structs.intelLabel.text = "지능: " + PlayerObj._current._playerInfo._int;
         _structs.wepLabel.text = "공격력: " + PlayerObj._current._playerInfo._wep;
         _structs.armLabel.text = "방어력: " + PlayerObj._current._playerInfo._arm;
+        _structs.expLabel.text = "경험치: " + PlayerObj._current._playerInfo._exp;
         _structs.levelPLabel.text = PlayerObj._current._playerInfo._levelPoint.ToString();
     }
 

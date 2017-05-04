@@ -25,7 +25,7 @@ public class TrapCtrl : MonoBehaviour, IEventScript
         _gm.SetPlayerHPOnUI();
         _cardScript.SetFrontDesc(text);
         _gm.SetEnd();
-        _cardScript.CardEnd();
+        _cardScript.CardEnd("");
     }
 
     public void GetCommands(ref string[] _gmCommands)

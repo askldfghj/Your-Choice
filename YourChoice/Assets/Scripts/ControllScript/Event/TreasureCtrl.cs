@@ -35,7 +35,7 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
                                             [Random.Range(0, DataPool._current._ScriptionDic["FindTresure"].Count)];
             _gm.StartNarration(narration);
             _gm.SetEnd();
-            _cardScript.CardEnd();
+            _cardScript.CardEnd(text);
         }
         else
         {
@@ -44,7 +44,10 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
             _gm.StartNarration(narration);
             text = "응 미믹";
             ObjectInfo enemy = (ObjectInfo)DataPool._current._eventObjDic["Mimic"][0].Clone();
-            _cardScript.ChangeToMonster(enemy);
+            _player.ObjShake();
+            _player.Damaged(CaculateScript.MonsterAttack(enemy));
+            _gm.SetPlayerHPOnUI();
+            _cardScript.ChangeMonster(enemy);
         }
         _cardScript.SetFrontDesc(text);
         _cardScript.ReFlip();
@@ -59,7 +62,7 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
         _gm.StartNarration(narration);
         _gm.SetEnd();
         _cardScript.SetFrontDesc(text);
-        _cardScript.CardEnd();
+        _cardScript.CardEnd("");
         _cardScript.ReFlip();
     }
 
@@ -74,7 +77,7 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
                                             [Random.Range(0, DataPool._current._ScriptionDic["Broken"].Count)];
             _gm.StartNarration(narration);
             _gm.SetEnd();
-            _cardScript.CardEnd();
+            _cardScript.CardEnd("");
         }
         else
         {
@@ -83,7 +86,7 @@ public class TreasureCtrl : MonoBehaviour, IEventScript
             _gm.StartNarration(narration);
             text = "미믹이 맞았다!";
             ObjectInfo enemy = (ObjectInfo)DataPool._current._eventObjDic["Mimic"][0].Clone();
-            _cardScript.ChangeToMonster(enemy);
+            _cardScript.ChangeMonster(enemy);
         }
         _cardScript.SetFrontDesc(text);
         _cardScript.ReFlip();

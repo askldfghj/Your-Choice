@@ -78,7 +78,7 @@ public class CardCtrl : MonoBehaviour
     public void CardGenerate()
     {
         //카드 종류 얻기
-        _currentEvent = DataPool._current._eventList[2].gameObject;
+        _currentEvent = DataPool._current._eventList[Random.Range(1, DataPool._current._eventList.Length)].gameObject;
 
         //종류에 따른 계산 함수 호출
         _currentEvent.SendMessage("EventCaculate");
@@ -121,22 +121,20 @@ public class CardCtrl : MonoBehaviour
         _currentEvent.SendMessage("GetCommandsText", _buttonTexts);
     }
 
-    public void ChangeToMonster(ObjectInfo enemy)
+    public void ChangeMonster(ObjectInfo enemy)
     {
         _currentEvent = DataPool._current._eventList[1].gameObject;
         EncounterCtrl encounter = _currentEvent.GetComponent<EncounterCtrl>();
         encounter.EventCaculateAfter(enemy);
         _currentEvent.SendMessage("GetCommands", _buttonCommands);
         _currentEvent.SendMessage("GetCommandsText", _buttonTexts);
-
     }
 
-    public void CardEnd()
+    public void CardEnd(string resultText)
     {
         _cardEnd = true;
         _card._flipButton.SetActive(false);
-        //결과 계산 함수 필요, 인자로 string 받아보자
-        _gm.ShowResult("획득 경험치 : 3\n획득 골드 : 10\n획득 아이템 : 없음");
+        _gm.ShowResult(resultText);
         StartCoroutine("CardOffEffect");
     }
 
